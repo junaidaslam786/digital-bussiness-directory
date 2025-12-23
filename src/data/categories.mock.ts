@@ -1,0 +1,88 @@
+import { Category } from "@/types";
+
+export const categories: Category[] = [
+  {
+    id: "cat-1",
+    name: "Manufacturing",
+    slug: "manufacturing",
+    icon: "Factory",
+    description: "Industrial manufacturing and production companies",
+  },
+  {
+    id: "cat-2",
+    name: "Logistics",
+    slug: "logistics",
+    icon: "Truck",
+    description: "Transportation and logistics services",
+  },
+  {
+    id: "cat-3",
+    name: "IT Services",
+    slug: "it-services",
+    icon: "Laptop",
+    description: "Software development and IT solutions",
+  },
+  {
+    id: "cat-4",
+    name: "Restaurants",
+    slug: "restaurants",
+    icon: "UtensilsCrossed",
+    description: "Dining and food service establishments",
+  },
+  {
+    id: "cat-5",
+    name: "Clinics",
+    slug: "clinics",
+    icon: "Hospital",
+    description: "Medical clinics and healthcare services",
+  },
+  {
+    id: "cat-6",
+    name: "Education",
+    slug: "education",
+    icon: "GraduationCap",
+    description: "Educational institutions and training centers",
+  },
+  {
+    id: "cat-7",
+    name: "Beauty",
+    slug: "beauty",
+    icon: "Sparkles",
+    description: "Beauty salons and cosmetic services",
+  },
+  {
+    id: "cat-8",
+    name: "Construction",
+    slug: "construction",
+    icon: "HardHat",
+    description: "Construction and building services",
+  },
+  {
+    id: "cat-9",
+    name: "Automotive",
+    slug: "automotive",
+    icon: "Car",
+    description: "Automotive sales and repair services",
+  },
+  {
+    id: "cat-10",
+    name: "Retail",
+    slug: "retail",
+    icon: "ShoppingBag",
+    description: "Retail stores and shopping",
+  },
+  {
+    id: "cat-11",
+    name: "Tourism",
+    slug: "tourism",
+    icon: "Plane",
+    description: "Travel agencies and tourism services",
+  },
+  {
+    id: "cat-12",
+    name: "Finance",
+    slug: "finance",
+    icon: "Banknote",
+    description: "Financial services and consulting",
+  },
+];
