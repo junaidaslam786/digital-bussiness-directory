@@ -1593,7 +1593,7 @@ export const enterprises: Enterprise[] = [
       website: "https://www.kakaocorp.com",
       socials: [
         { type: "linkedin", url: "https://linkedin.com/company/kakao" },
-        { type: "twitter", url: "https://twitter.com/kakao" },
+        { type: "x", url: "https://twitter.com/kakao" },
       ],
     },
     address: {

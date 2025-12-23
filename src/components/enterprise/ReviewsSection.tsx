@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { RatingStars } from "@/components/common/RatingStars";
 import { reviews } from "@/data/reviews.mock";
+import { enterprises } from "@/data/enterprises.mock";
 import { formatRelativeTime } from "@/lib/format";
 import { User } from "lucide-react";
 
@@ -10,7 +11,11 @@ interface ReviewsSectionProps {
 }
 
 export function ReviewsSection({ enterpriseSlug }: ReviewsSectionProps) {
-  const enterpriseReviews = reviews.filter((r) => r.enterpriseSlug === enterpriseSlug);
+  // Find enterprise by slug to get the ID
+  const enterprise = enterprises.find((e) => e.slug === enterpriseSlug);
+  const enterpriseReviews = enterprise 
+    ? reviews.filter((r) => r.enterpriseId === enterprise.id)
+    : [];
 
   // Calculate rating distribution
   const distribution = [5, 4, 3, 2, 1].map((rating) => ({
@@ -109,14 +114,6 @@ export function ReviewsSection({ enterpriseSlug }: ReviewsSectionProps) {
                 <p className="mt-4 text-gray-700 dark:text-gray-300">
                   {review.comment}
                 </p>
-
-                {review.helpful > 0 && (
-                  <div className="mt-4 flex items-center space-x-2">
-                    <Badge variant="outline" className="text-xs">
-                      👍 {review.helpful} found this helpful
-                    </Badge>
-                  </div>
-                )}
               </CardContent>
             </Card>
           ))}

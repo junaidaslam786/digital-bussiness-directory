@@ -62,7 +62,6 @@ const ModalContent = React.forwardRef<HTMLDivElement, ModalContentProps>(
           "relative w-full max-w-lg rounded-xl bg-white p-6 shadow-xl dark:bg-gray-900",
           className
         )}
-        {...props}
       >
         {children}
       </motion.div>

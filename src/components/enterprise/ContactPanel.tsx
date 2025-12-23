@@ -126,20 +126,20 @@ export function ContactPanel({ enterprise }: ContactPanelProps) {
         {/* Action Buttons */}
         <div className="space-y-2 border-t border-gray-200 pt-4 dark:border-gray-800">
           {contact.phone && (
-            <Button className="w-full" asChild>
-              <a href={`tel:${contact.phone}`}>
+            <a href={`tel:${contact.phone}`}>
+              <Button className="w-full">
                 <Phone className="mr-2 h-4 w-4" />
                 Call Now
-              </a>
-            </Button>
+              </Button>
+            </a>
           )}
           {contact.website && (
-            <Button variant="outline" className="w-full" asChild>
-              <a href={contact.website} target="_blank" rel="noopener noreferrer">
+            <a href={contact.website} target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" className="w-full">
                 <Globe className="mr-2 h-4 w-4" />
                 Visit Website
-              </a>
-            </Button>
+              </Button>
+            </a>
           )}
         </div>
       </CardContent>

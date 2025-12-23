@@ -156,11 +156,11 @@ export default function AdminDashboard() {
                         Verified
                       </Badge>
                     )}
-                    <Button variant="ghost" size="sm" asChild>
-                      <Link href={`/enterprises/${enterprise.slug}`}>
+                    <Link href={`/enterprises/${enterprise.slug}`}>
+                      <Button variant="ghost" size="sm">
                         <Eye className="h-4 w-4" />
-                      </Link>
-                    </Button>
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               ))}
@@ -206,11 +206,11 @@ export default function AdminDashboard() {
                       </p>
                     </div>
                   </div>
-                  <Button variant="ghost" size="sm" asChild>
-                    <Link href={`/enterprises/${enterprise.slug}`}>
+                  <Link href={`/enterprises/${enterprise.slug}`}>
+                    <Button variant="ghost" size="sm">
                       <Eye className="h-4 w-4" />
-                    </Link>
-                  </Button>
+                    </Button>
+                  </Link>
                 </div>
               ))}
             </div>
@@ -225,30 +225,30 @@ export default function AdminDashboard() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 md:grid-cols-4">
-            <Button className="w-full" asChild>
-              <Link href="/claim">
+            <Link href="/claim">
+              <Button className="w-full">
                 <Plus className="mr-2 h-4 w-4" />
                 Add Business
-              </Link>
-            </Button>
-            <Button variant="outline" className="w-full" asChild>
-              <Link href="/categories">
+              </Button>
+            </Link>
+            <Link href="/categories">
+              <Button variant="outline" className="w-full">
                 <Eye className="mr-2 h-4 w-4" />
                 View Categories
-              </Link>
-            </Button>
-            <Button variant="outline" className="w-full" asChild>
-              <Link href="/cities">
+              </Button>
+            </Link>
+            <Link href="/cities">
+              <Button variant="outline" className="w-full">
                 <Eye className="mr-2 h-4 w-4" />
                 View Cities
-              </Link>
-            </Button>
-            <Button variant="outline" className="w-full" asChild>
-              <Link href="/search">
+              </Button>
+            </Link>
+            <Link href="/search">
+              <Button variant="outline" className="w-full">
                 <Eye className="mr-2 h-4 w-4" />
                 Browse All
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </div>
         </CardContent>
       </Card>

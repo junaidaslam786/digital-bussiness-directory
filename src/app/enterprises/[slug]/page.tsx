@@ -19,10 +19,9 @@ import { BusinessCard } from "@/components/enterprise/BusinessCard";
 import { Heart, GitCompare, Share2, MapPin, Users, Calendar, Award } from "lucide-react";
 import { useFavoritesStore } from "@/store/favorites.store";
 import { useCompareStore } from "@/store/compare.store";
-import { formatCurrency, formatDate } from "@/lib/format";
-import { getEnterpriseGallery, getCategoryImage } from "@/lib/images";
+import { formatCurrency } from "@/lib/format";
+import { getEnterpriseGallery } from "@/lib/images";
 import { useState } from "react";
-import Image from "next/image";
 
 export default function EnterprisePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);

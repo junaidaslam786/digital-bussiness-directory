@@ -44,13 +44,16 @@ export default function SearchPage() {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
-  const toggleArrayFilter = (key: "categories" | "cities" | "priceRanges" | "employeeRanges", value: string) => {
-    setFilters((prev) => ({
-      ...prev,
-      [key]: prev[key].includes(value)
-        ? prev[key].filter((v) => v !== value)
-        : [...prev[key], value],
-    }));
+  const toggleArrayFilter = (key: "categories" | "cities" | "priceRanges" | "employeeRanges", value: any) => {
+    setFilters((prev) => {
+      const currentArray = (prev[key] || []) as any[];
+      return {
+        ...prev,
+        [key]: currentArray.includes(value)
+          ? currentArray.filter((v) => v !== value)
+          : [...currentArray, value],
+      };
+    });
   };
 
   const clearFilters = () => {
@@ -66,10 +69,10 @@ export default function SearchPage() {
   };
 
   const activeFilterCount =
-    filters.categories.length +
-    filters.cities.length +
-    filters.priceRanges.length +
-    filters.employeeRanges.length +
+    (filters.categories?.length || 0) +
+    (filters.cities?.length || 0) +
+    (filters.priceRanges?.length || 0) +
+    (filters.employeeRanges?.length || 0) +
     (filters.verified ? 1 : 0) +
     (filters.minRating ? 1 : 0);
 
@@ -115,7 +118,7 @@ export default function SearchPage() {
                   >
                     <input
                       type="checkbox"
-                      checked={filters.categories.includes(category.slug)}
+                      checked={filters.categories?.includes(category.slug) || false}
                       onChange={() => toggleArrayFilter("categories", category.slug)}
                       className="rounded border-gray-300"
                     />
@@ -140,12 +143,12 @@ export default function SearchPage() {
                   >
                     <input
                       type="checkbox"
-                      checked={filters.cities.includes(city.nameEn)}
-                      onChange={() => toggleArrayFilter("cities", city.nameEn)}
+                      checked={filters.cities?.includes(city.name) || false}
+                      onChange={() => toggleArrayFilter("cities", city.name)}
                       className="rounded border-gray-300"
                     />
                     <span className="text-gray-700 dark:text-gray-300">
-                      {city.nameEn}
+                      {city.name}
                     </span>
                   </label>
                 ))}
@@ -236,7 +239,7 @@ export default function SearchPage() {
           {/* Active Filters */}
           {activeFilterCount > 0 && (
             <div className="mb-6 flex flex-wrap gap-2">
-              {filters.categories.map((slug) => {
+              {filters.categories?.map((slug) => {
                 const category = categories.find((c) => c.slug === slug);
                 return (
                   <Badge key={slug} variant="secondary">
@@ -250,7 +253,7 @@ export default function SearchPage() {
                   </Badge>
                 );
               })}
-              {filters.cities.map((city) => (
+              {filters.cities?.map((city) => (
                 <Badge key={city} variant="secondary">
                   {city}
                   <button

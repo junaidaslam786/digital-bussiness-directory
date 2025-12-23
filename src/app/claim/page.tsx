@@ -71,9 +71,9 @@ export default function ClaimBusinessPage() {
             </p>
             <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
               <Button onClick={() => setSubmitted(false)}>Submit Another Claim</Button>
-              <Button variant="outline" asChild>
-                <a href="/">Back to Home</a>
-              </Button>
+              <a href="/">
+                <Button variant="outline">Back to Home</Button>
+              </a>
             </div>
           </CardContent>
         </Card>

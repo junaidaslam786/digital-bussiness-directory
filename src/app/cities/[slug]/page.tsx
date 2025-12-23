@@ -21,7 +21,7 @@ export default function CityPage({ params }: { params: Promise<{ slug: string }>
   }
 
   // Filter enterprises by city
-  const cityEnterprises = enterprises.filter((e) => e.address.city === city.nameEn);
+  const cityEnterprises = enterprises.filter((e) => e.address.city === city.name);
 
   // Sort enterprises
   const sortedEnterprises = sortEnterprises(cityEnterprises, sortBy);
@@ -32,7 +32,7 @@ export default function CityPage({ params }: { params: Promise<{ slug: string }>
         items={[
           { label: "Home", href: "/" },
           { label: "Cities", href: "/cities" },
-          { label: city.nameEn, href: `/cities/${city.slug}` },
+          { label: city.name, href: `/cities/${city.slug}` },
         ]}
       />
 
@@ -45,11 +45,11 @@ export default function CityPage({ params }: { params: Promise<{ slug: string }>
             </div>
             <div>
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl">
-                {city.nameEn}
+                {city.name}
               </h1>
-              <p className="text-lg text-gray-600 dark:text-gray-400">{city.nameKo}</p>
+              <p className="text-lg text-gray-600 dark:text-gray-400">{city.region}</p>
               <p className="mt-1 text-sm text-gray-500">
-                {city.province} • {sortedEnterprises.length}{" "}
+                {sortedEnterprises.length}{" "}
                 {sortedEnterprises.length === 1 ? "business" : "businesses"}
               </p>
             </div>

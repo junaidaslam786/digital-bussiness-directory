@@ -21,14 +21,16 @@ export function CityCard({ city, count }: CityCardProps) {
 
             {/* Name */}
             <h3 className="mb-2 text-lg font-bold text-gray-900 dark:text-white">
-              {city.nameEn}
+              {city.name}
             </h3>
             <p className="mb-2 text-sm text-gray-600 dark:text-gray-400">
-              {city.nameKo}
+              {city.region}
             </p>
 
-            {/* Province */}
-            <p className="mb-3 text-xs text-gray-500">{city.province}</p>
+            {/* Description */}
+            {city.description && (
+              <p className="mb-3 text-xs text-gray-500 line-clamp-2">{city.description}</p>
+            )}
 
             {/* Count */}
             {count !== undefined && (

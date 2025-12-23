@@ -87,7 +87,6 @@ export function EnterpriseCard({ enterprise }: EnterpriseCardProps) {
             <RatingStars rating={enterprise.ratingAvg} size="sm" showNumber />
             <span className="text-xs text-gray-500">
               ({enterprise.ratingCount})
-              ({enterprise.reviewCount})
             </span>
           </div>
 

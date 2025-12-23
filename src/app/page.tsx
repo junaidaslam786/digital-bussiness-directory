@@ -3,7 +3,6 @@ import { EnterpriseCard } from "@/components/enterprise/EnterpriseCard";
 import { CategoryCard } from "@/components/category/CategoryCard";
 import { CityCard } from "@/components/city/CityCard";
 import { Button } from "@/components/ui/Button";
-import { PakistanFlag, SouthKoreaFlag } from "@/components/common/Flags";
 import { enterprises } from "@/data/enterprises.mock";
 import { categories } from "@/data/categories.mock";
 import { cities } from "@/data/cities.mock";
@@ -194,7 +193,7 @@ export default function Home() {
 
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:gap-6">
             {popularCities.map((city) => {
-              const count = enterprises.filter((e) => e.address.city === city.nameEn).length;
+              const count = enterprises.filter((e) => e.address.city === city.name).length;
               return <CityCard key={city.slug} city={city} count={count} />;
             })}
           </div>

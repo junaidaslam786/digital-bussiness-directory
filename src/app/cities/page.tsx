@@ -30,7 +30,7 @@ export default function CitiesPage() {
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
         {cities.map((city) => {
-          const count = enterprises.filter((e) => e.address.city === city.nameEn).length;
+          const count = enterprises.filter((e) => e.address.city === city.name).length;
           return <CityCard key={city.slug} city={city} count={count} />;
         })}
       </div>

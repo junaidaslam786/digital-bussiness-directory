@@ -3,11 +3,15 @@ import { Enterprise } from "@/types";
 export interface SearchFilters {
   query?: string;
   categories?: string[];
+  cities?: string[];
   city?: string;
   minRating?: number;
   openNow?: boolean;
   tags?: string[];
   priceRange?: number[];
+  priceRanges?: number[][];
+  employeeRanges?: string[];
+  verified?: boolean;
 }
 
 export type SortOption = "relevance" | "rating" | "newest" | "alphabetical";
