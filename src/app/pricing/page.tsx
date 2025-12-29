@@ -8,15 +8,14 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function PricingPage() {
-    const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
 
     const packages = [
         {
-            id: "free",
-            name: "Free Listing",
+            id: "freemium",
+            name: "Freemium",
             icon: Building2,
             description: "Perfect for getting started",
-            price: { monthly: 0, yearly: 0 },
+            price: 50,
             popular: false,
             features: [
                 { name: "Basic business profile", included: true },
@@ -30,7 +29,7 @@ export default function PricingPage() {
                 { name: "Analytics dashboard", included: false },
                 { name: "Product listings", included: false },
             ],
-            cta: "Get Started Free",
+            cta: "Start Freemium Plan",
             buttonVariant: "outline" as const,
         },
         {
@@ -38,7 +37,7 @@ export default function PricingPage() {
             name: "Basic",
             icon: Star,
             description: "Ideal for small businesses",
-            price: { monthly: 100, yearly: 1200 },
+            price: 100,
             popular: false,
             features: [
                 { name: "Everything in Free, plus:", included: true },
@@ -60,7 +59,7 @@ export default function PricingPage() {
             name: "Premium",
             icon: Zap,
             description: "Best for growing businesses",
-            price: { monthly: 200, yearly: 2400 },
+            price: 200,
             popular: true,
             features: [
                 { name: "Everything in Basic, plus:", included: true },
@@ -83,7 +82,7 @@ export default function PricingPage() {
             name: "Enterprise",
             icon: Crown,
             description: "For large organizations",
-            price: { monthly: 300, yearly: 3600 },
+            price: 300,
             popular: false,
             features: [
                 { name: "Everything in Premium, plus:", included: true },
@@ -102,8 +101,6 @@ export default function PricingPage() {
         },
     ];
 
-    const yearlyDiscount = 17; // 17% discount for yearly billing
-
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
             {/* Header */}
@@ -117,55 +114,27 @@ export default function PricingPage() {
                         <p className="text-xl text-blue-100">
                             Choose the perfect plan to grow your business presence in South Korea
                         </p>
+                        <div className="mt-6 inline-block rounded-full bg-emerald-500 px-6 py-2 text-sm font-semibold">
+                            🎉 Pakistan Business Association Korea Members: Get 10% OFF on all plans!
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div className="container mx-auto px-4 py-16">
-                {/* Billing Toggle */}
-                <div className="mb-12 flex items-center justify-center gap-4">
-                    <span
-                        className={`text-sm font-medium ${billingCycle === "monthly"
-                            ? "text-gray-900 dark:text-white"
-                            : "text-gray-500 dark:text-gray-400"
-                            }`}
-                    >
-                        Monthly
-                    </span>
-                    <button
-                        onClick={() =>
-                            setBillingCycle(billingCycle === "monthly" ? "yearly" : "monthly")
-                        }
-                        className={`relative inline-flex h-8 w-14 items-center rounded-full transition-colors ${billingCycle === "yearly" ? "bg-blue-600" : "bg-gray-300 dark:bg-gray-700"
-                            }`}
-                    >
-                        <span
-                            className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${billingCycle === "yearly" ? "translate-x-7" : "translate-x-1"
-                                }`}
-                        />
-                    </button>
-                    <span
-                        className={`text-sm font-medium ${billingCycle === "yearly"
-                            ? "text-gray-900 dark:text-white"
-                            : "text-gray-500 dark:text-gray-400"
-                            }`}
-                    >
-                        Yearly
-                    </span>
-                    {billingCycle === "yearly" && (
-                        <Badge className="bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
-                            Save {yearlyDiscount}%
-                        </Badge>
-                    )}
+                {/* Pricing Info */}
+                <div className="mb-12 text-center">
+                    <p className="text-lg text-gray-600 dark:text-gray-400">
+                        All plans are billed <span className="font-semibold text-blue-600 dark:text-blue-400">annually</span>
+                    </p>
                 </div>
 
                 {/* Pricing Cards */}
                 <div className="grid gap-8 lg:grid-cols-4">
                     {packages.map((pkg) => {
                         const Icon = pkg.icon;
-                        const price = billingCycle === "monthly" ? pkg.price.monthly : pkg.price.yearly;
-                        const pricePerMonth =
-                            billingCycle === "yearly" ? Math.round(price / 12) : price;
+                        const price = pkg.price;
+                        const pricePerMonth = Math.round(price / 12);
 
                         return (
                             <Card
@@ -209,17 +178,17 @@ export default function PricingPage() {
                                     <div className="mt-6">
                                         <div className="flex items-baseline">
                                             <span className="text-4xl font-bold text-gray-900 dark:text-white">
-                                                ${pricePerMonth.toLocaleString()}
+                                                ${price.toLocaleString()}
                                             </span>
                                             {price > 0 && (
                                                 <span className="ml-2 text-gray-600 dark:text-gray-400">
-                                                    /month
+                                                    /year
                                                 </span>
                                             )}
                                         </div>
-                                        {billingCycle === "yearly" && price > 0 && (
+                                        {price > 0 && (
                                             <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                                                Billed ${price.toLocaleString()} annually
+                                                ${pricePerMonth}/month when billed annually
                                             </p>
                                         )}
                                     </div>
