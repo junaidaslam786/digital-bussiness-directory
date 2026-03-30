@@ -10,7 +10,7 @@ interface CityCardProps {
 
 export function CityCard({ city, count }: CityCardProps) {
   return (
-    <Link href={`/cities/${city.slug}`}>
+    <Link href={`/cities/${city.id}`}>
       <Card className="group cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
         <CardContent className="p-6">
           <div className="flex flex-col items-center text-center">
@@ -23,15 +23,6 @@ export function CityCard({ city, count }: CityCardProps) {
             <h3 className="mb-2 text-lg font-bold text-gray-900 dark:text-white">
               {city.name}
             </h3>
-            <p className="mb-2 text-sm text-gray-600 dark:text-gray-400">
-              {city.region}
-            </p>
-
-            {/* Description */}
-            {city.description && (
-              <p className="mb-3 text-xs text-gray-500 line-clamp-2">{city.description}</p>
-            )}
-
             {/* Count */}
             {count !== undefined && (
               <p className="text-xs font-medium text-gray-500">

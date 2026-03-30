@@ -25,7 +25,6 @@ export function AdminHeader() {
     }, []);
 
     const toggleDarkMode = () => {
-        // This is a placeholder - in production, you'd use a theme provider
         setIsDark(!isDark);
     };
 

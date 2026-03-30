@@ -1,0 +1,716 @@
+﻿src/app/admin/analytics/page.tsx(21,25): error TS2339: Property 'ratingCount' does not exist on type 'Business'.
+src/app/admin/analytics/page.tsx(32,11): error TS2551: Property 'categories' does not exist on type 'Business'. Did you mean 'categoryId'?
+src/app/admin/analytics/page.tsx(32,28): error TS7006: Parameter 'c' implicitly has an 'any' type.
+src/app/admin/analytics/page.tsx(41,40): error TS18048: 'e.address' is possibly 'undefined'.
+src/app/admin/analytics/page.tsx(41,50): error TS2339: Property 'city' does not exist on type 'string'.
+src/app/admin/analytics/page.tsx(48,23): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/app/admin/analytics/page.tsx(48,37): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/app/admin/analytics/page.tsx(274,33): error TS2551: Property 'categories' does not exist on type 'Business'. Did you mean 'categoryId'?
+src/app/admin/analytics/page.tsx(280,37): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/app/admin/analytics/page.tsx(285,33): error TS2339: Property 'ratingCount' does not exist on type 'Business'.
+src/app/admin/businesses/page.tsx(32,24): error TS2551: Property 'categories' does not exist on type 'Business'. Did you mean 'categoryId'?
+src/app/admin/businesses/page.tsx(32,41): error TS7006: Parameter 'cat' implicitly has an 'any' type.
+src/app/admin/businesses/page.tsx(35,13): error TS18048: 'enterprise.address' is possibly 'undefined'.
+src/app/admin/businesses/page.tsx(35,32): error TS2339: Property 'city' does not exist on type 'string'.
+src/app/admin/businesses/page.tsx(118,66): error TS2339: Property 'verified' does not exist on type 'Business'.
+src/app/admin/businesses/page.tsx(126,67): error TS2339: Property 'verified' does not exist on type 'Business'.
+src/app/admin/businesses/page.tsx(135,80): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/app/admin/businesses/page.tsx(182,94): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/admin/businesses/page.tsx(188,73): error TS2551: Property 'shortDescription' does not exist on type 'Business'. Did you mean 'description'?
+src/app/admin/businesses/page.tsx(195,65): error TS2551: Property 'categories' does not exist on type 'Business'. Did you mean 'categoryId'?
+src/app/admin/businesses/page.tsx(200,54): error TS18048: 'enterprise.address' is possibly 'undefined'.
+src/app/admin/businesses/page.tsx(200,73): error TS2339: Property 'city' does not exist on type 'string'.
+src/app/admin/businesses/page.tsx(206,69): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/app/admin/businesses/page.tsx(209,70): error TS2339: Property 'ratingCount' does not exist on type 'Business'.
+src/app/admin/businesses/page.tsx(214,61): error TS2339: Property 'verified' does not exist on type 'Business'.
+src/app/admin/businesses/page.tsx(227,92): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/admin/businesses/page.tsx(256,82): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/admin/businesses/page.tsx(263,57): error TS2551: Property 'categories' does not exist on type 'Business'. Did you mean 'categoryId'?
+src/app/admin/businesses/page.tsx(266,49): error TS2339: Property 'verified' does not exist on type 'Business'.
+src/app/admin/businesses/page.tsx(273,49): error TS2551: Property 'shortDescription' does not exist on type 'Business'. Did you mean 'description'?
+src/app/admin/businesses/page.tsx(278,57): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/app/admin/businesses/page.tsx(281,58): error TS2339: Property 'ratingCount' does not exist on type 'Business'.
+src/app/admin/businesses/page.tsx(285,80): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/admin/categories/page.tsx(26,15): error TS2551: Property 'categories' does not exist on type 'Business'. Did you mean 'categoryId'?
+src/app/admin/categories/page.tsx(26,32): error TS7006: Parameter 'c' implicitly has an 'any' type.
+src/app/admin/cities/page.tsx(25,50): error TS18048: 'e.address' is possibly 'undefined'.
+src/app/admin/cities/page.tsx(25,60): error TS2339: Property 'city' does not exist on type 'string'.
+src/app/admin/cities/page.tsx(31,15): error TS2339: Property 'region' does not exist on type '{ businessCount: number; id: string; name: string; countryId?: string | undefined; isActive: boolean; country?: Country | undefined; }'.
+src/app/admin/cities/page.tsx(31,30): error TS2339: Property 'region' does not exist on type '{ businessCount: number; id: string; name: string; countryId?: string | undefined; isActive: boolean; country?: Country | undefined; }'.
+src/app/admin/cities/page.tsx(143,55): error TS2339: Property 'region' does not exist on type '{ businessCount: number; id: string; name: string; countryId?: string | undefined; isActive: boolean; country?: Country | undefined; }'.
+src/app/admin/page.tsx(29,59): error TS2339: Property 'verified' does not exist on type 'Business'.
+src/app/admin/page.tsx(32,44): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/app/admin/page.tsx(41,23): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/app/admin/page.tsx(41,37): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/app/admin/page.tsx(167,35): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/admin/page.tsx(172,56): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/admin/page.tsx(178,35): error TS2551: Property 'categories' does not exist on type 'Business'. Did you mean 'categoryId'?
+src/app/admin/page.tsx(178,58): error TS18048: 'enterprise.address' is possibly 'undefined'.
+src/app/admin/page.tsx(178,77): error TS2339: Property 'city' does not exist on type 'string'.
+src/app/admin/page.tsx(182,33): error TS2339: Property 'verified' does not exist on type 'Business'.
+src/app/admin/page.tsx(185,60): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/admin/page.tsx(217,35): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/admin/page.tsx(226,58): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/admin/page.tsx(232,37): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/app/admin/page.tsx(232,74): error TS2339: Property 'ratingCount' does not exist on type 'Business'.
+src/app/admin/page.tsx(236,58): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/admin/reviews/page.tsx(26,68): error TS2339: Property 'enterpriseId' does not exist on type 'Review'.
+src/app/admin/reviews/page.tsx(30,41): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/admin/reviews/page.tsx(39,13): error TS18048: 'review.comment' is possibly 'undefined'.
+src/app/categories/[slug]/page.tsx(31,7): error TS2551: Property 'categories' does not exist on type 'Business'. Did you mean 'categoryId'?
+src/app/categories/[slug]/page.tsx(31,24): error TS7006: Parameter 'c' implicitly has an 'any' type.
+src/app/categories/[slug]/page.tsx(87,45): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/categories/page.tsx(34,15): error TS2551: Property 'categories' does not exist on type 'Business'. Did you mean 'categoryId'?
+src/app/categories/page.tsx(34,32): error TS7006: Parameter 'c' implicitly has an 'any' type.
+src/app/cities/[slug]/page.tsx(16,37): error TS2339: Property 'slug' does not exist on type 'City'.
+src/app/cities/[slug]/page.tsx(24,53): error TS18048: 'e.address' is possibly 'undefined'.
+src/app/cities/[slug]/page.tsx(24,63): error TS2339: Property 'city' does not exist on type 'string'.
+src/app/cities/[slug]/page.tsx(35,53): error TS2339: Property 'slug' does not exist on type 'City'.
+src/app/cities/[slug]/page.tsx(50,77): error TS2339: Property 'region' does not exist on type 'City'.
+src/app/cities/[slug]/page.tsx(77,45): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/cities/page.tsx(33,51): error TS18048: 'e.address' is possibly 'undefined'.
+src/app/cities/page.tsx(33,61): error TS2339: Property 'city' does not exist on type 'string'.
+src/app/cities/page.tsx(34,38): error TS2339: Property 'slug' does not exist on type 'City'.
+src/app/compare/page.tsx(16,11): error TS2339: Property 'compareSlugs' does not exist on type 'CompareState'.
+src/app/compare/page.tsx(19,29): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/compare/page.tsx(80,35): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/compare/page.tsx(85,56): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/compare/page.tsx(91,67): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/compare/page.tsx(109,35): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/compare/page.tsx(112,31): error TS2339: Property 'gallery' does not exist on type 'Business'.
+src/app/compare/page.tsx(114,39): error TS2339: Property 'gallery' does not exist on type 'Business'.
+src/app/compare/page.tsx(115,39): error TS2339: Property 'gallery' does not exist on type 'Business'.
+src/app/compare/page.tsx(130,35): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/compare/page.tsx(133,51): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/app/compare/page.tsx(135,33): error TS2339: Property 'ratingCount' does not exist on type 'Business'.
+src/app/compare/page.tsx(148,35): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/compare/page.tsx(152,33): error TS2551: Property 'categories' does not exist on type 'Business'. Did you mean 'categoryId'?
+src/app/compare/page.tsx(152,49): error TS7006: Parameter 'cat' implicitly has an 'any' type.
+src/app/compare/page.tsx(169,35): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/compare/page.tsx(174,28): error TS18048: 'enterprise.address' is possibly 'undefined'.
+src/app/compare/page.tsx(174,47): error TS2339: Property 'city' does not exist on type 'string'.
+src/app/compare/page.tsx(186,57): error TS2339: Property 'hours' does not exist on type 'Business'.
+src/app/compare/page.tsx(189,37): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/compare/page.tsx(207,35): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/compare/page.tsx(210,31): error TS2339: Property 'verified' does not exist on type 'Business'.
+src/app/compare/page.tsx(226,35): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/compare/page.tsx(229,31): error TS2339: Property 'priceRange' does not exist on type 'Business'.
+src/app/compare/page.tsx(230,70): error TS2339: Property 'priceRange' does not exist on type 'Business'.
+src/app/compare/page.tsx(245,35): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/compare/page.tsx(248,31): error TS2339: Property 'contact' does not exist on type 'Business'.
+src/app/compare/page.tsx(250,47): error TS2339: Property 'contact' does not exist on type 'Business'.
+src/app/compare/page.tsx(253,53): error TS2339: Property 'contact' does not exist on type 'Business'.
+src/app/compare/page.tsx(269,35): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/compare/page.tsx(272,31): error TS2339: Property 'contact' does not exist on type 'Business'.
+src/app/compare/page.tsx(274,40): error TS2339: Property 'contact' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(28,48): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(36,36): error TS2339: Property 'gallery' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(37,18): error TS2339: Property 'gallery' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(40,20): error TS2551: Property 'categories' does not exist on type 'Business'. Did you mean 'categoryId'?
+src/app/enterprises/[slug]/page.tsx(47,42): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(48,44): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(52,33): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(54,30): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(60,36): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(62,31): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(72,70): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(82,27): error TS2339: Property 'verified' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(83,27): error TS2551: Property 'categories' does not exist on type 'Business'. Did you mean 'categoryId'?
+src/app/enterprises/[slug]/page.tsx(83,43): error TS7006: Parameter 'cat' implicitly has an 'any' type.
+src/app/enterprises/[slug]/page.tsx(92,25): error TS2339: Property 'legalName' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(92,49): error TS2339: Property 'legalName' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(94,29): error TS2339: Property 'legalName' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(98,47): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(100,30): error TS2339: Property 'ratingCount' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(104,27): error TS2551: Property 'shortDescription' does not exist on type 'Business'. Did you mean 'description'?
+src/app/enterprises/[slug]/page.tsx(170,38): error TS2339: Property 'ratingCount' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(185,27): error TS2339: Property 'tags' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(190,46): error TS2339: Property 'tags' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(195,29): error TS2339: Property 'foundedYear' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(202,39): error TS2339: Property 'foundedYear' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(209,29): error TS2339: Property 'employeeRange' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(216,39): error TS2339: Property 'employeeRange' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(229,26): error TS18048: 'enterprise.address' is possibly 'undefined'.
+src/app/enterprises/[slug]/page.tsx(229,45): error TS2339: Property 'city' does not exist on type 'string'.
+src/app/enterprises/[slug]/page.tsx(235,29): error TS2339: Property 'priceRange' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(242,50): error TS2339: Property 'priceRange' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(250,27): error TS2339: Property 'certifications' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(256,33): error TS2339: Property 'certifications' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(256,53): error TS7006: Parameter 'cert' implicitly has an 'any' type.
+src/app/enterprises/[slug]/page.tsx(256,59): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/app/enterprises/[slug]/page.tsx(269,16): error TS18048: 'enterprise.services' is possibly 'undefined'.
+src/app/enterprises/[slug]/page.tsx(275,22): error TS18048: 'enterprise.services' is possibly 'undefined'.
+src/app/enterprises/[slug]/page.tsx(281,42): error TS2339: Property 'name' does not exist on type 'BusinessService'.
+src/app/enterprises/[slug]/page.tsx(287,38): error TS2339: Property 'priceFrom' does not exist on type 'BusinessService'.
+src/app/enterprises/[slug]/page.tsx(289,62): error TS2339: Property 'priceFrom' does not exist on type 'BusinessService'.
+src/app/enterprises/[slug]/page.tsx(300,16): error TS18048: 'enterprise.products' is possibly 'undefined'.
+src/app/enterprises/[slug]/page.tsx(306,22): error TS18048: 'enterprise.products' is possibly 'undefined'.
+src/app/enterprises/[slug]/page.tsx(325,16): error TS18048: 'enterprise.services' is possibly 'undefined'.
+src/app/enterprises/[slug]/page.tsx(325,52): error TS18048: 'enterprise.products' is possibly 'undefined'.
+src/app/enterprises/[slug]/page.tsx(333,82): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(339,23): error TS2339: Property 'owner' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(339,61): error TS2339: Property 'owner' does not exist on type 'Business'.
+src/app/enterprises/[slug]/page.tsx(341,49): error TS2339: Property 'hours' does not exist on type 'Business'.
+src/app/favorites/page.tsx(14,28): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/favorites/page.tsx(44,45): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/page.tsx(15,23): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/app/page.tsx(15,37): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/app/page.tsx(16,20): error TS2339: Property 'verified' does not exist on type 'Business'.
+src/app/page.tsx(20,23): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/app/page.tsx(20,37): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/app/page.tsx(97,49): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/page.tsx(129,47): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/app/page.tsx(161,26): error TS2551: Property 'categories' does not exist on type 'Business'. Did you mean 'categoryId'?
+src/app/page.tsx(161,43): error TS7006: Parameter 'c' implicitly has an 'any' type.
+src/app/page.tsx(196,55): error TS18048: 'e.address' is possibly 'undefined'.
+src/app/page.tsx(196,65): error TS2339: Property 'city' does not exist on type 'string'.
+src/app/page.tsx(197,42): error TS2339: Property 'slug' does not exist on type 'City'.
+src/app/search/page.tsx(23,5): error TS2353: Object literal may only specify known properties, and 'query' does not exist in type 'SearchFilters | (() => SearchFilters)'.
+src/app/search/page.tsx(49,34): error TS2551: Property 'categories' does not exist on type 'SearchFilters'. Did you mean 'categoryId'?
+src/app/search/page.tsx(61,7): error TS2353: Object literal may only specify known properties, and 'query' does not exist in type 'SetStateAction<SearchFilters>'.
+src/app/search/page.tsx(72,14): error TS2551: Property 'categories' does not exist on type 'SearchFilters'. Did you mean 'categoryId'?
+src/app/search/page.tsx(73,14): error TS2339: Property 'cities' does not exist on type 'SearchFilters'.
+src/app/search/page.tsx(74,14): error TS2339: Property 'priceRanges' does not exist on type 'SearchFilters'.
+src/app/search/page.tsx(75,14): error TS2339: Property 'employeeRanges' does not exist on type 'SearchFilters'.
+src/app/search/page.tsx(76,14): error TS2339: Property 'verified' does not exist on type 'SearchFilters'.
+src/app/search/page.tsx(77,14): error TS2339: Property 'minRating' does not exist on type 'SearchFilters'.
+src/app/search/page.tsx(121,40): error TS2551: Property 'categories' does not exist on type 'SearchFilters'. Did you mean 'categoryId'?
+src/app/search/page.tsx(141,31): error TS2339: Property 'slug' does not exist on type 'City'.
+src/app/search/page.tsx(146,40): error TS2339: Property 'cities' does not exist on type 'SearchFilters'.
+src/app/search/page.tsx(163,36): error TS2339: Property 'verified' does not exist on type 'SearchFilters'.
+src/app/search/page.tsx(164,55): error TS2345: Argument of type '"verified"' is not assignable to parameter of type 'keyof SearchFilters'.
+src/app/search/page.tsx(183,32): error TS2339: Property 'minRating' does not exist on type 'SearchFilters'.
+src/app/search/page.tsx(186,21): error TS2345: Argument of type '"minRating"' is not assignable to parameter of type 'keyof SearchFilters'.
+src/app/search/page.tsx(242,24): error TS2551: Property 'categories' does not exist on type 'SearchFilters'. Did you mean 'categoryId'?
+src/app/search/page.tsx(242,41): error TS7006: Parameter 'slug' implicitly has an 'any' type.
+src/app/search/page.tsx(256,24): error TS2339: Property 'cities' does not exist on type 'SearchFilters'.
+src/app/search/page.tsx(256,37): error TS7006: Parameter 'city' implicitly has an 'any' type.
+src/app/search/page.tsx(267,24): error TS2339: Property 'verified' does not exist on type 'SearchFilters'.
+src/app/search/page.tsx(271,55): error TS2345: Argument of type '"verified"' is not assignable to parameter of type 'keyof SearchFilters'.
+src/app/search/page.tsx(285,49): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/components/city/CityCard.tsx(13,33): error TS2339: Property 'slug' does not exist on type 'City'.
+src/components/city/CityCard.tsx(27,21): error TS2339: Property 'region' does not exist on type 'City'.
+src/components/city/CityCard.tsx(31,19): error TS2339: Property 'description' does not exist on type 'City'.
+src/components/city/CityCard.tsx(32,76): error TS2339: Property 'description' does not exist on type 'City'.
+src/components/enterprise/BusinessCard.tsx(9,19): error TS2339: Property 'businessCard' does not exist on type 'Business'.
+src/components/enterprise/BusinessCard.tsx(16,25): error TS2339: Property 'businessCard' does not exist on type 'Business'.
+src/components/enterprise/BusinessHoursTable.tsx(72,34): error TS2339: Property 'closed' does not exist on type 'number | BusinessHour | (() => ArrayIterator<BusinessHour>) | { [x: number]: boolean | undefined; length?: boolean | undefined; toString?: boolean | undefined; ... 38 more ...; readonly [Symbol.unscopables]?: boolean | undefined; } | ... 37 more ... | ((index: number, value: BusinessHour) => BusinessHour[])'.
+  Property 'closed' does not exist on type 'number'.
+src/components/enterprise/BusinessHoursTable.tsx(77,29): error TS2339: Property 'closed' does not exist on type 'number | BusinessHour | (() => ArrayIterator<BusinessHour>) | { [x: number]: boolean | undefined; length?: boolean | undefined; toString?: boolean | undefined; ... 38 more ...; readonly [Symbol.unscopables]?: boolean | undefined; } | ... 37 more ... | ((index: number, value: BusinessHour) => BusinessHour[])'.
+  Property 'closed' does not exist on type 'number'.
+src/components/enterprise/BusinessHoursTable.tsx(79,35): error TS2339: Property 'open' does not exist on type 'number | BusinessHour | (() => ArrayIterator<BusinessHour>) | { [x: number]: boolean | undefined; length?: boolean | undefined; toString?: boolean | undefined; ... 38 more ...; readonly [Symbol.unscopables]?: boolean | undefined; } | ... 37 more ... | ((index: number, value: BusinessHour) => BusinessHour[])'.
+  Property 'open' does not exist on type 'number'.
+src/components/enterprise/BusinessHoursTable.tsx(79,54): error TS2339: Property 'close' does not exist on type 'number | BusinessHour | (() => ArrayIterator<BusinessHour>) | { [x: number]: boolean | undefined; length?: boolean | undefined; toString?: boolean | undefined; ... 38 more ...; readonly [Symbol.unscopables]?: boolean | undefined; } | ... 37 more ... | ((index: number, value: BusinessHour) => BusinessHour[])'.
+  Property 'close' does not exist on type 'number'.
+src/components/enterprise/ContactPanel.tsx(12,11): error TS2339: Property 'contact' does not exist on type 'Business'.
+src/components/enterprise/ContactPanel.tsx(92,16): error TS18048: 'address' is possibly 'undefined'.
+src/components/enterprise/ContactPanel.tsx(92,24): error TS2339: Property 'street' does not exist on type 'string'.
+src/components/enterprise/ContactPanel.tsx(93,16): error TS18048: 'address' is possibly 'undefined'.
+src/components/enterprise/ContactPanel.tsx(93,24): error TS2339: Property 'district' does not exist on type 'string'.
+src/components/enterprise/ContactPanel.tsx(93,41): error TS18048: 'address' is possibly 'undefined'.
+src/components/enterprise/ContactPanel.tsx(93,49): error TS2339: Property 'district' does not exist on type 'string'.
+src/components/enterprise/ContactPanel.tsx(95,16): error TS18048: 'address' is possibly 'undefined'.
+src/components/enterprise/ContactPanel.tsx(95,24): error TS2339: Property 'city' does not exist on type 'string'.
+src/components/enterprise/ContactPanel.tsx(95,32): error TS18048: 'address' is possibly 'undefined'.
+src/components/enterprise/ContactPanel.tsx(95,40): error TS2339: Property 'country' does not exist on type 'string'.
+src/components/enterprise/ContactPanel.tsx(96,16): error TS18048: 'address' is possibly 'undefined'.
+src/components/enterprise/ContactPanel.tsx(96,24): error TS2339: Property 'postalCode' does not exist on type 'string'.
+src/components/enterprise/ContactPanel.tsx(96,42): error TS18048: 'address' is possibly 'undefined'.
+src/components/enterprise/ContactPanel.tsx(96,50): error TS2339: Property 'postalCode' does not exist on type 'string'.
+src/components/enterprise/ContactPanel.tsx(108,37): error TS7006: Parameter 'social' implicitly has an 'any' type.
+src/components/enterprise/ContactPanel.tsx(108,45): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/components/enterprise/EnterpriseCard.tsx(25,42): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/components/enterprise/EnterpriseCard.tsx(26,44): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/components/enterprise/EnterpriseCard.tsx(27,47): error TS2339: Property 'hours' does not exist on type 'Business'.
+src/components/enterprise/EnterpriseCard.tsx(28,38): error TS2551: Property 'categories' does not exist on type 'Business'. Did you mean 'categoryId'?
+src/components/enterprise/EnterpriseCard.tsx(33,33): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/components/enterprise/EnterpriseCard.tsx(35,30): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/components/enterprise/EnterpriseCard.tsx(42,36): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/components/enterprise/EnterpriseCard.tsx(44,31): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/components/enterprise/EnterpriseCard.tsx(50,46): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/components/enterprise/EnterpriseCard.tsx(62,23): error TS2339: Property 'verified' does not exist on type 'Business'.
+src/components/enterprise/EnterpriseCard.tsx(87,45): error TS2339: Property 'ratingAvg' does not exist on type 'Business'.
+src/components/enterprise/EnterpriseCard.tsx(89,28): error TS2339: Property 'ratingCount' does not exist on type 'Business'.
+src/components/enterprise/EnterpriseCard.tsx(102,47): error TS18048: 'enterprise.address' is possibly 'undefined'.
+src/components/enterprise/EnterpriseCard.tsx(102,66): error TS2339: Property 'city' does not exist on type 'string'.
+src/components/enterprise/EnterpriseCard.tsx(104,25): error TS2339: Property 'contact' does not exist on type 'Business'.
+src/components/enterprise/EnterpriseCard.tsx(107,53): error TS2339: Property 'contact' does not exist on type 'Business'.
+src/components/enterprise/EnterpriseCard.tsx(117,25): error TS2339: Property 'priceRange' does not exist on type 'Business'.
+src/components/enterprise/EnterpriseCard.tsx(119,40): error TS2339: Property 'priceRange' does not exist on type 'Business'.
+src/components/enterprise/EnterpriseCard.tsx(122,25): error TS2339: Property 'verified' does not exist on type 'Business'.
+src/components/enterprise/GalleryCarousel.tsx(43,41): error TS2339: Property 'url' does not exist on type 'BusinessMedia'.
+src/components/enterprise/GalleryCarousel.tsx(44,41): error TS2339: Property 'alt' does not exist on type 'BusinessMedia'.
+src/components/enterprise/GalleryCarousel.tsx(96,30): error TS2339: Property 'url' does not exist on type 'BusinessMedia'.
+src/components/enterprise/GalleryCarousel.tsx(97,30): error TS2339: Property 'alt' does not exist on type 'BusinessMedia'.
+src/components/enterprise/GalleryCarousel.tsx(126,41): error TS2339: Property 'url' does not exist on type 'BusinessMedia'.
+src/components/enterprise/GalleryCarousel.tsx(127,41): error TS2339: Property 'alt' does not exist on type 'BusinessMedia'.
+src/components/enterprise/OwnerInfo.tsx(23,20): error TS2339: Property 'photo' does not exist on type 'BusinessOwner'.
+src/components/enterprise/OwnerInfo.tsx(25,28): error TS2339: Property 'photo' does not exist on type 'BusinessOwner'.
+src/components/enterprise/OwnerInfo.tsx(44,22): error TS2339: Property 'title' does not exist on type 'BusinessOwner'.
+src/components/enterprise/OwnerInfo.tsx(49,18): error TS2339: Property 'bio' does not exist on type 'BusinessOwner'.
+src/components/enterprise/OwnerInfo.tsx(51,22): error TS2339: Property 'bio' does not exist on type 'BusinessOwner'.
+src/components/enterprise/OwnerInfo.tsx(56,34): error TS2339: Property 'linkedin' does not exist on type 'BusinessOwner'.
+src/components/enterprise/OwnerInfo.tsx(67,22): error TS2339: Property 'linkedin' does not exist on type 'BusinessOwner'.
+src/components/enterprise/OwnerInfo.tsx(69,31): error TS2339: Property 'linkedin' does not exist on type 'BusinessOwner'.
+src/components/enterprise/RelatedBusinesses.tsx(25,43): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/components/enterprise/ReviewsSection.tsx(15,48): error TS2339: Property 'slug' does not exist on type 'Business'.
+src/components/enterprise/ReviewsSection.tsx(17,31): error TS2339: Property 'enterpriseId' does not exist on type 'Review'.
+src/components/layout/Header.tsx(14,57): error TS2339: Property 'compareSlugs' does not exist on type 'CompareState'.
+src/data/categories.mock.ts(4,3): error TS2739: Type '{ id: string; name: string; slug: string; icon: string; description: string; }' is missing the following properties from type 'Category': isActive, createdAt, updatedAt
+src/data/categories.mock.ts(11,3): error TS2739: Type '{ id: string; name: string; slug: string; icon: string; description: string; }' is missing the following properties from type 'Category': isActive, createdAt, updatedAt
+src/data/categories.mock.ts(18,3): error TS2739: Type '{ id: string; name: string; slug: string; icon: string; description: string; }' is missing the following properties from type 'Category': isActive, createdAt, updatedAt
+src/data/categories.mock.ts(25,3): error TS2739: Type '{ id: string; name: string; slug: string; icon: string; description: string; }' is missing the following properties from type 'Category': isActive, createdAt, updatedAt
+src/data/categories.mock.ts(32,3): error TS2739: Type '{ id: string; name: string; slug: string; icon: string; description: string; }' is missing the following properties from type 'Category': isActive, createdAt, updatedAt
+src/data/categories.mock.ts(39,3): error TS2739: Type '{ id: string; name: string; slug: string; icon: string; description: string; }' is missing the following properties from type 'Category': isActive, createdAt, updatedAt
+src/data/categories.mock.ts(46,3): error TS2739: Type '{ id: string; name: string; slug: string; icon: string; description: string; }' is missing the following properties from type 'Category': isActive, createdAt, updatedAt
+src/data/categories.mock.ts(53,3): error TS2739: Type '{ id: string; name: string; slug: string; icon: string; description: string; }' is missing the following properties from type 'Category': isActive, createdAt, updatedAt
+src/data/categories.mock.ts(60,3): error TS2739: Type '{ id: string; name: string; slug: string; icon: string; description: string; }' is missing the following properties from type 'Category': isActive, createdAt, updatedAt
+src/data/categories.mock.ts(67,3): error TS2739: Type '{ id: string; name: string; slug: string; icon: string; description: string; }' is missing the following properties from type 'Category': isActive, createdAt, updatedAt
+src/data/categories.mock.ts(74,3): error TS2739: Type '{ id: string; name: string; slug: string; icon: string; description: string; }' is missing the following properties from type 'Category': isActive, createdAt, updatedAt
+src/data/categories.mock.ts(81,3): error TS2739: Type '{ id: string; name: string; slug: string; icon: string; description: string; }' is missing the following properties from type 'Category': isActive, createdAt, updatedAt
+src/data/cities.mock.ts(7,5): error TS2353: Object literal may only specify known properties, and 'slug' does not exist in type 'City'.
+src/data/cities.mock.ts(15,5): error TS2353: Object literal may only specify known properties, and 'slug' does not exist in type 'City'.
+src/data/cities.mock.ts(23,5): error TS2353: Object literal may only specify known properties, and 'slug' does not exist in type 'City'.
+src/data/cities.mock.ts(31,5): error TS2353: Object literal may only specify known properties, and 'slug' does not exist in type 'City'.
+src/data/cities.mock.ts(39,5): error TS2353: Object literal may only specify known properties, and 'slug' does not exist in type 'City'.
+src/data/cities.mock.ts(47,5): error TS2353: Object literal may only specify known properties, and 'slug' does not exist in type 'City'.
+src/data/cities.mock.ts(55,5): error TS2353: Object literal may only specify known properties, and 'slug' does not exist in type 'City'.
+src/data/cities.mock.ts(63,5): error TS2353: Object literal may only specify known properties, and 'slug' does not exist in type 'City'.
+src/data/cities.mock.ts(71,5): error TS2353: Object literal may only specify known properties, and 'slug' does not exist in type 'City'.
+src/data/cities.mock.ts(79,5): error TS2353: Object literal may only specify known properties, and 'slug' does not exist in type 'City'.
+src/data/enterprises.mock.ts(39,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(64,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(69,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(75,7): error TS2739: Type '{ name: string; description: string; sku: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(80,7): error TS2739: Type '{ name: string; description: string; sku: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(123,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(148,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(153,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(158,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(165,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(166,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(198,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(223,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(228,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(233,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(239,7): error TS2739: Type '{ name: string; description: string; sku: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(244,7): error TS2739: Type '{ name: string; description: string; sku: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(288,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(314,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(319,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(356,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(382,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(387,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(392,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(430,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(456,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(461,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(466,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(473,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(505,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(530,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(535,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(540,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(545,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(552,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(584,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(609,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(614,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(619,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(626,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(627,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(659,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(684,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(689,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(694,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(700,7): error TS2739: Type '{ name: string; description: string; sku: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(701,7): error TS2739: Type '{ name: string; description: string; sku: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(702,7): error TS2739: Type '{ name: string; description: string; sku: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(736,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(762,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(767,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(772,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(779,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(780,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(813,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(838,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(843,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(848,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(855,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(856,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(888,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(913,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(918,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(923,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(960,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(985,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(990,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(996,7): error TS2739: Type '{ name: string; description: string; sku: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(997,7): error TS2739: Type '{ name: string; description: string; sku: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(1000,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(1032,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(1057,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1062,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1069,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(1070,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(1102,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(1127,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1132,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1137,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1175,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(1200,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1205,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1243,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(1268,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1273,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1278,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1284,7): error TS2739: Type '{ name: string; description: string; sku: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(1285,7): error TS2739: Type '{ name: string; description: string; sku: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(1288,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(1320,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(1345,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1350,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1357,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(1390,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(1415,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1420,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1425,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1431,7): error TS2739: Type '{ name: string; description: string; sku: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(1432,7): error TS2739: Type '{ name: string; description: string; sku: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(1433,7): error TS2739: Type '{ name: string; description: string; sku: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(1436,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(1469,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(1495,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1500,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1505,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1539,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(1562,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1599,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(1623,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1628,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1661,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(1685,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1690,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1734,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(1758,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1791,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(1814,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1819,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1855,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(1878,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1883,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1920,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(1945,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1950,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(1986,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(2011,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2016,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2053,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(2077,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2113,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(2136,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2141,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2174,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(2197,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2202,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2239,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(2263,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2268,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2305,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(2329,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2362,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(2385,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2390,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2426,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(2450,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2455,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2491,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(2514,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2519,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2555,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(2579,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2584,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2617,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(2640,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2645,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2681,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(2705,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2710,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2747,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(2771,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2776,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2820,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(2845,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2850,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2855,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2860,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2866,7): error TS2739: Type '{ name: string; description: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(2870,7): error TS2739: Type '{ name: string; description: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(2877,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/enterprises.mock.ts(2918,5): error TS2322: Type '{ country: string; city: string; district: string; street: string; postalCode: string; lat: number; lng: number; }' is not assignable to type 'string'.
+src/data/enterprises.mock.ts(2943,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2948,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2953,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2958,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessService'.
+src/data/enterprises.mock.ts(2964,7): error TS2739: Type '{ name: string; description: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(2968,7): error TS2739: Type '{ name: string; description: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(2972,7): error TS2739: Type '{ name: string; description: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(2976,7): error TS2739: Type '{ name: string; description: string; }' is missing the following properties from type 'BusinessProduct': id, businessId, sortOrder, createdAt, updatedAt
+src/data/enterprises.mock.ts(2983,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type 'BusinessBranch'.
+src/data/reviews.mock.ts(5,18): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(6,18): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(7,18): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(8,18): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(9,18): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(10,18): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(13,18): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(14,18): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(15,18): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(16,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(17,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(18,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(21,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(22,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(23,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(24,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(25,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(26,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(29,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(30,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(31,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(32,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(33,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(34,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(37,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(38,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(39,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(40,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(41,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(42,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(45,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(46,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(47,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(48,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(49,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(50,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(53,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(54,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(55,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(56,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(57,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(58,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(61,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(62,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(63,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(64,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(65,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(66,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(69,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(70,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(71,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(72,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(73,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(74,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(77,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(78,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(79,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(80,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(81,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(82,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(85,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(86,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(87,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(88,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(89,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(90,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(93,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(94,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(95,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(96,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(97,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(98,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(101,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(102,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(103,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(104,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(105,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(106,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(109,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(110,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(111,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(112,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(113,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(114,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(117,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(118,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(119,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(120,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(121,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(122,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(125,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(126,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(127,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(128,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(129,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(130,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(133,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(134,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(135,19): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(136,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(137,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(138,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(141,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(142,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(143,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(144,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(145,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(146,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(149,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(150,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(151,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(152,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(153,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(154,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(157,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(158,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(159,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(160,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(161,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(162,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(165,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(166,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(167,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(168,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(169,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(170,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(173,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(174,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(175,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(176,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(177,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(178,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(181,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(182,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(183,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(184,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(185,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(186,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(189,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(190,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(191,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(192,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(193,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(194,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(197,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(198,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(199,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(200,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(201,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(202,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(205,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(206,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(207,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(208,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(209,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(210,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(213,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(214,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(215,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(216,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(217,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(218,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(221,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(222,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(223,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(224,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(225,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(226,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(229,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(230,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(231,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(232,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(233,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(234,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(237,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(238,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(239,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(240,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(241,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(242,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(245,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(246,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(247,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(248,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(249,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(250,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(253,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(254,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(255,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(256,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(257,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(258,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(261,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(262,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(263,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(264,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(265,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(266,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(269,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(270,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(271,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(272,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(273,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(274,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(277,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(278,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(279,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(280,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(281,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(282,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(285,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(286,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(287,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(288,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(289,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(290,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(293,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(294,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(295,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(296,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(297,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(298,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(301,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(302,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(303,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(304,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(305,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(306,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(309,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(310,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(311,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(312,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(313,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(314,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(317,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(318,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(319,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(320,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(321,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(322,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(325,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(326,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(327,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(328,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(329,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(330,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(333,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(334,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(335,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(336,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(337,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/data/reviews.mock.ts(338,20): error TS2353: Object literal may only specify known properties, and 'enterpriseId' does not exist in type 'Review'.
+src/lib/time.ts(9,28): error TS7015: Element implicitly has an 'any' type because index expression is not of type 'number'.
+src/lib/time.ts(29,28): error TS7015: Element implicitly has an 'any' type because index expression is not of type 'number'.
+src/lib/time.ts(54,16): error TS2551: Property 'closed' does not exist on type 'BusinessHour'. Did you mean 'isClosed'?
+src/lib/time.ts(55,22): error TS2339: Property 'open' does not exist on type 'BusinessHour'.
+src/lib/time.ts(55,41): error TS2339: Property 'close' does not exist on type 'BusinessHour'.

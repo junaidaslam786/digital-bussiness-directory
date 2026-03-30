@@ -1,10 +1,22 @@
+"use client";
+
+import { useEffect } from "react";
 import { CategoryCard } from "@/components/category/CategoryCard";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { categories } from "@/data/categories.mock";
-import { enterprises } from "@/data/enterprises.mock";
+import { Skeleton } from "@/components/ui/Skeleton";
+import { useCategoriesStore } from "@/store/categories.api";
+import { useBusinessesStore } from "@/store/businesses.api";
 import { Building2 } from "lucide-react";
 
 export default function CategoriesPage() {
+  const { categories, loading: categoriesLoading, fetchCategories } = useCategoriesStore();
+  const { businesses, fetchBusinesses } = useBusinessesStore();
+
+  useEffect(() => {
+    fetchCategories();
+    fetchBusinesses();
+  }, [fetchCategories, fetchBusinesses]);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <Breadcrumbs
@@ -29,14 +41,18 @@ export default function CategoriesPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
-        {categories.map((category) => {
-          const count = enterprises.filter((e) =>
-            e.categories.some((c) => c.slug === category.slug)
-          ).length;
-          return (
-            <CategoryCard key={category.slug} category={category} count={count} />
-          );
-        })}
+        {categoriesLoading
+          ? Array.from({ length: 8 }).map((_, i) => (
+              <Skeleton key={i} className="h-32 w-full rounded-lg" />
+            ))
+          : categories.map((category) => {
+              const count = businesses.filter((e) =>
+                e.categoryId === category.id
+              ).length;
+              return (
+                <CategoryCard key={category.id} category={category} count={count} />
+              );
+            })}
       </div>
     </div>
   );

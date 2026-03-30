@@ -1,58 +1,44 @@
-import { BusinessHours, DayHours } from "@/types";
+import type { BusinessHour, DayOfWeek } from "@/types";
 
-export function isOpenNow(hours: BusinessHours): boolean {
-  const now = new Date();
-  const dayNames = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const;
-  const today = dayNames[now.getDay()];
-  const currentTime = now.getHours() * 60 + now.getMinutes();
-
-  const todayHours = hours[today];
-
-  if (todayHours.closed) return false;
-
-  const [openHour, openMin] = todayHours.open.split(":").map(Number);
-  const [closeHour, closeMin] = todayHours.close.split(":").map(Number);
-
-  const openTime = openHour * 60 + openMin;
-  const closeTime = closeHour * 60 + closeMin;
-
-  return currentTime >= openTime && currentTime < closeTime;
+function findToday(hours: BusinessHour[]): BusinessHour | undefined {
+  const dayNames: DayOfWeek[] = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+  const today = dayNames[new Date().getDay()];
+  return hours.find((h) => h.dayOfWeek === today);
 }
 
-export function getOpenStatus(hours: BusinessHours): {
+export function isOpenNow(hours: BusinessHour[]): boolean {
+  const entry = findToday(hours);
+  if (!entry || entry.isClosed) return false;
+
+  const currentTime = new Date().getHours() * 60 + new Date().getMinutes();
+  const [openH, openM] = entry.openTime.split(":").map(Number);
+  const [closeH, closeM] = entry.closeTime.split(":").map(Number);
+
+  return currentTime >= openH * 60 + openM && currentTime < closeH * 60 + closeM;
+}
+
+export function getOpenStatus(hours: BusinessHour[]): {
   isOpen: boolean;
   message: string;
 } {
-  const now = new Date();
-  const dayNames = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const;
-  const today = dayNames[now.getDay()];
-  const todayHours = hours[today];
+  const entry = findToday(hours);
 
-  if (todayHours.closed) {
-    return {
-      isOpen: false,
-      message: "Closed today",
-    };
+  if (!entry || entry.isClosed) {
+    return { isOpen: false, message: "Closed today" };
   }
 
   const isOpen = isOpenNow(hours);
 
   if (isOpen) {
-    return {
-      isOpen: true,
-      message: `Open until ${todayHours.close}`,
-    };
+    return { isOpen: true, message: `Open until ${entry.closeTime}` };
   }
 
-  return {
-    isOpen: false,
-    message: `Opens at ${todayHours.open}`,
-  };
+  return { isOpen: false, message: `Opens at ${entry.openTime}` };
 }
 
-export function formatBusinessHours(dayHours: DayHours): string {
-  if (dayHours.closed) return "Closed";
-  return `${dayHours.open} - ${dayHours.close}`;
+export function formatBusinessHours(dayHours: BusinessHour): string {
+  if (dayHours.isClosed) return "Closed";
+  return `${dayHours.openTime} - ${dayHours.closeTime}`;
 }
 
 /**

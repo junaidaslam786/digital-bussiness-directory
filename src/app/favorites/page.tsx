@@ -1,17 +1,24 @@
 "use client";
 
+import { useEffect } from "react";
 import { EnterpriseCard } from "@/components/enterprise/EnterpriseCard";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { useFavoritesStore } from "@/store/favorites.store";
-import { enterprises } from "@/data/enterprises.mock";
+import { useBusinessesStore } from "@/store/businesses.api";
 import { Heart } from "lucide-react";
 
 export default function FavoritesPage() {
   const favoriteIds = useFavoritesStore((state) => state.favoriteIds);
+  const { businesses, listLoading, fetchBusinesses } = useBusinessesStore();
 
-  const favoriteEnterprises = enterprises.filter((e) =>
-    favoriteIds.includes(e.slug)
+  useEffect(() => {
+    fetchBusinesses();
+  }, [fetchBusinesses]);
+
+  const favoriteEnterprises = businesses.filter((e) =>
+    favoriteIds.includes(e.id)
   );
 
   return (
@@ -38,10 +45,16 @@ export default function FavoritesPage() {
         </div>
       </div>
 
-      {favoriteEnterprises.length > 0 ? (
+      {listLoading ? (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <Skeleton key={i} className="h-64 w-full rounded-lg" />
+          ))}
+        </div>
+      ) : favoriteEnterprises.length > 0 ? (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {favoriteEnterprises.map((enterprise) => (
-            <EnterpriseCard key={enterprise.slug} enterprise={enterprise} />
+            <EnterpriseCard key={enterprise.id} enterprise={enterprise} />
           ))}
         </div>
       ) : (

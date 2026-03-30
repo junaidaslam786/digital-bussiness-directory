@@ -1,10 +1,22 @@
+"use client";
+
+import { useEffect } from "react";
 import { CityCard } from "@/components/city/CityCard";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { cities } from "@/data/cities.mock";
-import { enterprises } from "@/data/enterprises.mock";
+import { Skeleton } from "@/components/ui/Skeleton";
+import { useLocationsStore } from "@/store/locations.api";
+import { useBusinessesStore } from "@/store/businesses.api";
 import { MapPin } from "lucide-react";
 
 export default function CitiesPage() {
+  const { cities, citiesLoading, fetchCities } = useLocationsStore();
+  const { businesses, fetchBusinesses } = useBusinessesStore();
+
+  useEffect(() => {
+    fetchCities();
+    fetchBusinesses();
+  }, [fetchCities, fetchBusinesses]);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <Breadcrumbs
@@ -29,10 +41,14 @@ export default function CitiesPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
-        {cities.map((city) => {
-          const count = enterprises.filter((e) => e.address.city === city.name).length;
-          return <CityCard key={city.slug} city={city} count={count} />;
-        })}
+        {citiesLoading
+          ? Array.from({ length: 8 }).map((_, i) => (
+              <Skeleton key={i} className="h-32 w-full rounded-lg" />
+            ))
+          : cities.map((city) => {
+              const count = businesses.filter((e) => e.cityId === city.id).length;
+              return <CityCard key={city.id} city={city} count={count} />;
+            })}
       </div>
     </div>
   );

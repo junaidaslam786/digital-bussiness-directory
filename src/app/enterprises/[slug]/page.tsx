@@ -1,14 +1,15 @@
 "use client";
 
-import { use } from "react";
+import { use, useState, useEffect } from "react";
 import { notFound } from "next/navigation";
-import { enterprises } from "@/data/enterprises.mock";
+import { useBusinessesStore } from "@/store/businesses.api";
+import { useReviewsStore } from "@/store/reviews.api";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { RatingStars } from "@/components/common/RatingStars";
-import { TagPills } from "@/components/common/TagPills";
 import { GalleryCarousel } from "@/components/enterprise/GalleryCarousel";
 import { ContactPanel } from "@/components/enterprise/ContactPanel";
 import { BusinessHoursTable } from "@/components/enterprise/BusinessHoursTable";
@@ -16,50 +17,70 @@ import { ReviewsSection } from "@/components/enterprise/ReviewsSection";
 import { RelatedBusinesses } from "@/components/enterprise/RelatedBusinesses";
 import { OwnerInfo } from "@/components/enterprise/OwnerInfo";
 import { BusinessCard } from "@/components/enterprise/BusinessCard";
-import { Heart, GitCompare, Share2, MapPin, Users, Calendar, Award } from "lucide-react";
+import { Heart, GitCompare, Share2, MapPin } from "lucide-react";
 import { useFavoritesStore } from "@/store/favorites.store";
 import { useCompareStore } from "@/store/compare.store";
 import { formatCurrency } from "@/lib/format";
-import { getEnterpriseGallery } from "@/lib/images";
-import { useState } from "react";
 
 export default function EnterprisePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
-  const enterprise = enterprises.find((e) => e.slug === slug);
+  const { currentBusiness: enterprise, detailLoading, detailError, fetchBusinessById, clearCurrentBusiness } = useBusinessesStore();
+  const { reviews, loading: reviewsLoading, fetchBusinessReviews } = useReviewsStore();
   const [activeTab, setActiveTab] = useState<"overview" | "services" | "reviews">("overview");
-
-  if (!enterprise) {
-    notFound();
-  }
-
-  // Use enterprise gallery if available, otherwise generate placeholder images
-  const galleryImages = enterprise.gallery.length > 0 
-    ? enterprise.gallery 
-    : getEnterpriseGallery(
-        enterprise.id,
-        enterprise.categories[0].slug,
-        3
-      );
-
   const { addFavorite, removeFavorite, isFavorite } = useFavoritesStore();
   const { addToCompare, removeFromCompare, isInCompare, canAddMore } = useCompareStore();
 
-  const favorite = isFavorite(enterprise.slug);
-  const inCompare = isInCompare(enterprise.slug);
+  useEffect(() => {
+    fetchBusinessById(slug);
+    fetchBusinessReviews(slug);
+    return () => { clearCurrentBusiness(); };
+  }, [slug, fetchBusinessById, fetchBusinessReviews, clearCurrentBusiness]);
+
+  if (detailLoading || !enterprise) {
+    if (detailError) {
+      notFound();
+    }
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <Skeleton className="mb-4 h-6 w-48" />
+        <Skeleton className="mb-4 h-10 w-96" />
+        <Skeleton className="mb-8 h-6 w-64" />
+        <div className="grid gap-8 lg:grid-cols-3">
+          <div className="space-y-8 lg:col-span-2">
+            <Skeleton className="h-64 w-full rounded-lg" />
+            <Skeleton className="h-48 w-full rounded-lg" />
+          </div>
+          <div className="space-y-6">
+            <Skeleton className="h-48 w-full rounded-lg" />
+            <Skeleton className="h-32 w-full rounded-lg" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const enterpriseReviews = reviews;
+  const avgRating =
+    enterpriseReviews.length > 0
+      ? enterpriseReviews.reduce((s, r) => s + r.rating, 0) / enterpriseReviews.length
+      : 0;
+
+  const favorite = isFavorite(enterprise.id);
+  const inCompare = isInCompare(enterprise.id);
 
   const handleFavoriteClick = () => {
     if (favorite) {
-      removeFavorite(enterprise.slug);
+      removeFavorite(enterprise.id);
     } else {
-      addFavorite(enterprise.slug);
+      addFavorite(enterprise.id);
     }
   };
 
   const handleCompareClick = () => {
     if (inCompare) {
-      removeFromCompare(enterprise.slug);
+      removeFromCompare(enterprise.id);
     } else if (canAddMore()) {
-      addToCompare(enterprise.slug);
+      addToCompare(enterprise.id);
     }
   };
 
@@ -69,48 +90,40 @@ export default function EnterprisePage({ params }: { params: Promise<{ slug: str
         items={[
           { label: "Home", href: "/" },
           { label: "Search", href: "/search" },
-          { label: enterprise.name, href: `/enterprises/${enterprise.slug}` },
+          { label: enterprise.name, href: `/enterprises/${enterprise.id}` },
         ]}
       />
 
       {/* Header */}
       <div className="mb-8 mt-4">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-          {/* Enterprise Info - Left Side */}
           <div className="flex-1">
             <div className="mb-2 flex flex-wrap items-center gap-2">
-              {enterprise.verified && <Badge variant="success">✓ Verified</Badge>}
-              {enterprise.categories.map((cat) => (
-                <Badge key={cat.slug} variant="secondary">
-                  {cat.name}
-                </Badge>
-              ))}
+              {enterprise.isApproved && <Badge variant="success">Approved</Badge>}
+              {enterprise.category && (
+                <Badge variant="secondary">{enterprise.category.name}</Badge>
+              )}
             </div>
             <h1 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white md:text-4xl">
               {enterprise.name}
             </h1>
-            {enterprise.legalName && enterprise.legalName !== enterprise.name && (
-              <p className="mb-2 text-sm text-gray-600 dark:text-gray-400">
-                {enterprise.legalName}
+            {enterpriseReviews.length > 0 && (
+              <div className="mb-3 flex items-center space-x-2">
+                <RatingStars rating={avgRating} size="lg" showNumber />
+                <span className="text-sm text-gray-600 dark:text-gray-400">
+                  ({enterpriseReviews.length} reviews)
+                </span>
+              </div>
+            )}
+            {enterprise.description && (
+              <p className="text-lg text-gray-700 dark:text-gray-300">
+                {enterprise.description}
               </p>
             )}
-            <div className="mb-3 flex items-center space-x-2">
-              <RatingStars rating={enterprise.ratingAvg} size="lg" showNumber />
-              <span className="text-sm text-gray-600 dark:text-gray-400">
-                ({enterprise.ratingCount} reviews)
-              </span>
-            </div>
-            <p className="text-lg text-gray-700 dark:text-gray-300">
-              {enterprise.shortDescription}
-            </p>
           </div>
 
-          {/* Action Buttons */}
           <div className="flex flex-wrap gap-2">
-            <Button
-              variant={favorite ? "default" : "outline"}
-              onClick={handleFavoriteClick}
-            >
+            <Button variant={favorite ? "default" : "outline"} onClick={handleFavoriteClick}>
               <Heart className={`mr-2 h-4 w-4 ${favorite ? "fill-current" : ""}`} />
               {favorite ? "Saved" : "Save"}
             </Button>
@@ -122,7 +135,17 @@ export default function EnterprisePage({ params }: { params: Promise<{ slug: str
               <GitCompare className={`mr-2 h-4 w-4 ${inCompare ? "fill-current" : ""}`} />
               {inCompare ? "In Compare" : "Compare"}
             </Button>
-            <Button variant="outline">
+            <Button
+              variant="outline"
+              onClick={() => {
+                if (navigator.share) {
+                  navigator.share({ title: enterprise.name, url: window.location.href });
+                } else {
+                  navigator.clipboard.writeText(window.location.href);
+                  alert("Link copied to clipboard!");
+                }
+              }}
+            >
               <Share2 className="mr-2 h-4 w-4" />
               Share
             </Button>
@@ -134,7 +157,9 @@ export default function EnterprisePage({ params }: { params: Promise<{ slug: str
         {/* Main Content */}
         <div className="space-y-8 lg:col-span-2">
           {/* Gallery */}
-          <GalleryCarousel images={galleryImages} />
+          {enterprise.media && enterprise.media.length > 0 && (
+            <GalleryCarousel images={enterprise.media} />
+          )}
 
           {/* Tabs */}
           <div className="border-b border-gray-200 dark:border-gray-800">
@@ -167,7 +192,7 @@ export default function EnterprisePage({ params }: { params: Promise<{ slug: str
                     : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
                 }`}
               >
-                Reviews ({enterprise.ratingCount})
+                Reviews ({enterpriseReviews.length})
               </button>
             </div>
           </div>
@@ -175,118 +200,52 @@ export default function EnterprisePage({ params }: { params: Promise<{ slug: str
           {/* Tab Content */}
           {activeTab === "overview" && (
             <div className="space-y-6">
-              <div>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
-                  About
-                </h2>
-                <p className="text-gray-700 dark:text-gray-300">{enterprise.description}</p>
-              </div>
-
-              {enterprise.tags.length > 0 && (
+              {enterprise.description && (
                 <div>
-                  <h3 className="mb-3 text-lg font-semibold text-gray-900 dark:text-white">
-                    Tags
-                  </h3>
-                  <TagPills tags={enterprise.tags} />
+                  <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">About</h2>
+                  <p className="text-gray-700 dark:text-gray-300">{enterprise.description}</p>
                 </div>
               )}
 
-              <div className="grid gap-4 sm:grid-cols-2">
-                {enterprise.foundedYear && (
-                  <Card>
-                    <CardContent className="flex items-center space-x-3 p-4">
-                      <Calendar className="h-8 w-8 text-gray-400" />
-                      <div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Founded</p>
-                        <p className="font-semibold text-gray-900 dark:text-white">
-                          {enterprise.foundedYear}
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-
-                {enterprise.employeeRange && (
-                  <Card>
-                    <CardContent className="flex items-center space-x-3 p-4">
-                      <Users className="h-8 w-8 text-gray-400" />
-                      <div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Employees</p>
-                        <p className="font-semibold text-gray-900 dark:text-white">
-                          {enterprise.employeeRange}
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-
+              {enterprise.address && (
                 <Card>
                   <CardContent className="flex items-center space-x-3 p-4">
                     <MapPin className="h-8 w-8 text-gray-400" />
                     <div>
                       <p className="text-sm text-gray-500 dark:text-gray-400">Location</p>
                       <p className="font-semibold text-gray-900 dark:text-white">
-                        {enterprise.address.city}
+                        {enterprise.address}
                       </p>
                     </div>
                   </CardContent>
                 </Card>
-
-                {enterprise.priceRange && (
-                  <Card>
-                    <CardContent className="flex items-center space-x-3 p-4">
-                      <Award className="h-8 w-8 text-gray-400" />
-                      <div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Price Range</p>
-                        <p className="font-semibold text-gray-900 dark:text-white">
-                          {"$".repeat(enterprise.priceRange)}
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-
-              {enterprise.certifications.length > 0 && (
-                <div>
-                  <h3 className="mb-3 text-lg font-semibold text-gray-900 dark:text-white">
-                    Certifications
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {enterprise.certifications.map((cert, index) => (
-                      <Badge key={index} variant="outline">
-                        {cert}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
               )}
             </div>
           )}
 
           {activeTab === "services" && (
             <div className="space-y-6">
-              {enterprise.services.length > 0 && (
+              {enterprise.services && enterprise.services.length > 0 && (
                 <div>
-                  <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
-                    Services
-                  </h2>
+                  <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">Services</h2>
                   <div className="space-y-3">
-                    {enterprise.services.map((service, index) => (
-                      <Card key={index}>
+                    {enterprise.services.map((service) => (
+                      <Card key={service.id}>
                         <CardContent className="p-4">
                           <div className="flex items-start justify-between">
                             <div>
                               <h3 className="font-semibold text-gray-900 dark:text-white">
-                                {service.name}
+                                {service.title}
                               </h3>
-                              <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                                {service.description}
-                              </p>
+                              {service.description && (
+                                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                                  {service.description}
+                                </p>
+                              )}
                             </div>
-                            {service.priceFrom && (
+                            {service.price != null && (
                               <Badge variant="outline">
-                                From {formatCurrency(service.priceFrom)}
+                                From {formatCurrency(service.price)}
                               </Badge>
                             )}
                           </div>
@@ -297,21 +256,21 @@ export default function EnterprisePage({ params }: { params: Promise<{ slug: str
                 </div>
               )}
 
-              {enterprise.products.length > 0 && (
+              {enterprise.products && enterprise.products.length > 0 && (
                 <div>
-                  <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
-                    Products
-                  </h2>
+                  <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">Products</h2>
                   <div className="grid gap-4 sm:grid-cols-2">
-                    {enterprise.products.map((product, index) => (
-                      <Card key={index}>
+                    {enterprise.products.map((product) => (
+                      <Card key={product.id}>
                         <CardContent className="p-4">
                           <h3 className="font-semibold text-gray-900 dark:text-white">
                             {product.name}
                           </h3>
-                          <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                            {product.description}
-                          </p>
+                          {product.description && (
+                            <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                              {product.description}
+                            </p>
+                          )}
                           {product.sku && (
                             <p className="mt-2 text-xs text-gray-500">SKU: {product.sku}</p>
                           )}
@@ -322,23 +281,26 @@ export default function EnterprisePage({ params }: { params: Promise<{ slug: str
                 </div>
               )}
 
-              {enterprise.services.length === 0 && enterprise.products.length === 0 && (
-                <p className="text-center text-gray-500">
-                  No services or products listed yet.
-                </p>
-              )}
+              {(!enterprise.services || enterprise.services.length === 0) &&
+                (!enterprise.products || enterprise.products.length === 0) && (
+                  <p className="text-center text-gray-500">
+                    No services or products listed yet.
+                  </p>
+                )}
             </div>
           )}
 
-          {activeTab === "reviews" && <ReviewsSection enterpriseSlug={enterprise.slug} />}
+          {activeTab === "reviews" && <ReviewsSection businessId={enterprise.id} />}
         </div>
 
         {/* Sidebar */}
         <div className="space-y-6">
           <BusinessCard enterprise={enterprise} />
-          {enterprise.owner && <OwnerInfo owner={enterprise.owner} />}
+          {enterprise.user && <OwnerInfo owner={enterprise.user} />}
           <ContactPanel enterprise={enterprise} />
-          <BusinessHoursTable hours={enterprise.hours} />
+          {enterprise.businessHours && enterprise.businessHours.length > 0 && (
+            <BusinessHoursTable hours={enterprise.businessHours} />
+          )}
         </div>
       </div>
 

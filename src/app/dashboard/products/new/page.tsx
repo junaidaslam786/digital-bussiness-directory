@@ -4,19 +4,49 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
-import { Package, Save, X } from "lucide-react";
+import { Package, Save, X, AlertCircle } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useBusinessesStore } from "@/store/businesses.api";
 
 export default function NewProductPage() {
+    const router = useRouter();
+    const { myBusinesses, fetchMyBusinesses } = useBusinessesStore();
+    const createProduct = useBusinessesStore((s) => s.createProduct);
+    const [saving, setSaving] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const business = myBusinesses[0];
+
     const [productData, setProductData] = useState({
         name: "",
         sku: "",
         description: "",
-        priceFrom: "",
-        priceTo: "",
-        stock: "In Stock",
+        price: "",
     });
+
+    useEffect(() => {
+        fetchMyBusinesses();
+    }, [fetchMyBusinesses]);
+
+    const handleSave = async () => {
+        if (!business || !productData.name.trim()) return;
+        setSaving(true);
+        setError(null);
+        try {
+            await createProduct(business.id, {
+                name: productData.name,
+                sku: productData.sku || undefined,
+                description: productData.description || undefined,
+                price: productData.price ? Number(productData.price) : undefined,
+            });
+            router.push("/dashboard/products");
+        } catch (err) {
+            setError((err as Error).message || "Failed to create product");
+        } finally {
+            setSaving(false);
+        }
+    };
 
     return (
         <div className="space-y-6">
@@ -31,9 +61,13 @@ export default function NewProductPage() {
                     </p>
                 </div>
                 <div className="flex gap-2">
-                    <Button className="bg-emerald-600 hover:bg-emerald-700">
+                    <Button
+                        onClick={handleSave}
+                        disabled={saving || !productData.name.trim()}
+                        className="bg-emerald-600 hover:bg-emerald-700"
+                    >
                         <Save className="mr-2 h-4 w-4" />
-                        Save Product
+                        {saving ? "Saving..." : "Save Product"}
                     </Button>
                     <Link href="/dashboard/products">
                         <Button variant="outline">
@@ -43,6 +77,13 @@ export default function NewProductPage() {
                     </Link>
                 </div>
             </div>
+
+            {error && (
+                <div className="flex items-center gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-800 dark:bg-red-900/20 dark:text-red-400">
+                    <AlertCircle className="h-4 w-4" />
+                    {error}
+                </div>
+            )}
 
             {/* Form */}
             <div className="grid gap-6 lg:grid-cols-3">
@@ -86,7 +127,7 @@ export default function NewProductPage() {
 
                                 <div>
                                     <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Description *
+                                        Description
                                     </label>
                                     <Textarea
                                         placeholder="Describe your product..."
@@ -98,50 +139,18 @@ export default function NewProductPage() {
                                     />
                                 </div>
 
-                                <div className="grid gap-4 md:grid-cols-2">
-                                    <div>
-                                        <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                            Price From (₩)
-                                        </label>
-                                        <Input
-                                            type="number"
-                                            placeholder="0"
-                                            value={productData.priceFrom}
-                                            onChange={(e) =>
-                                                setProductData({ ...productData, priceFrom: e.target.value })
-                                            }
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                            Price To (₩) - Optional
-                                        </label>
-                                        <Input
-                                            type="number"
-                                            placeholder="0"
-                                            value={productData.priceTo}
-                                            onChange={(e) =>
-                                                setProductData({ ...productData, priceTo: e.target.value })
-                                            }
-                                        />
-                                    </div>
-                                </div>
-
                                 <div>
                                     <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Stock Status
+                                        Price (₩)
                                     </label>
-                                    <select
-                                        className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600 dark:border-gray-700 dark:bg-gray-950"
-                                        value={productData.stock}
+                                    <Input
+                                        type="number"
+                                        placeholder="0"
+                                        value={productData.price}
                                         onChange={(e) =>
-                                            setProductData({ ...productData, stock: e.target.value })
+                                            setProductData({ ...productData, price: e.target.value })
                                         }
-                                    >
-                                        <option>In Stock</option>
-                                        <option>Out of Stock</option>
-                                        <option>Made to Order</option>
-                                    </select>
+                                    />
                                 </div>
                             </div>
                         </CardContent>
@@ -159,13 +168,10 @@ export default function NewProductPage() {
                                     <div className="text-center">
                                         <Package className="mx-auto h-12 w-12 text-gray-400" />
                                         <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                            Click to upload images
+                                            Upload via Gallery after creating
                                         </p>
                                     </div>
                                 </div>
-                                <Button variant="outline" className="w-full">
-                                    Upload Images
-                                </Button>
                             </div>
                         </CardContent>
                     </Card>

@@ -1,80 +1,48 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { SearchBar } from "@/components/common/SearchBar";
 import { EnterpriseCard } from "@/components/enterprise/EnterpriseCard";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Skeleton } from "@/components/ui/Skeleton";
-import { searchEnterprises, sortEnterprises } from "@/lib/search";
-import { enterprises } from "@/data/enterprises.mock";
-import { categories } from "@/data/categories.mock";
-import { cities } from "@/data/cities.mock";
-import { SORT_OPTIONS, PRICE_RANGES, EMPLOYEE_RANGES } from "@/lib/constants";
-import { SearchFilters, SortOption } from "@/lib/search";
-import { Filter, X, ChevronDown } from "lucide-react";
+import { useSearchStore } from "@/store/search.api";
+import { useCategoriesStore } from "@/store/categories.api";
+import { useLocationsStore } from "@/store/locations.api";
+import type { SearchParams as ApiSearchParams } from "@/types/api";
+import { Filter, X } from "lucide-react";
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
-  const [filters, setFilters] = useState<SearchFilters>({
-    query: searchParams.get("q") || "",
-    categories: searchParams.get("category") ? [searchParams.get("category")!] : [],
-    cities: searchParams.get("city") ? [searchParams.get("city")!] : [],
-    priceRanges: [],
-    employeeRanges: [],
-    verified: searchParams.get("verified") === "true",
-    minRating: undefined,
+  const { results, loading: searchLoading, search } = useSearchStore();
+  const { categories, fetchCategories } = useCategoriesStore();
+  const { cities, fetchCities } = useLocationsStore();
+
+  const [filters, setFilters] = useState<ApiSearchParams>({
+    q: searchParams.get("q") || "",
+    categoryId: searchParams.get("category") || undefined,
+    cityId: searchParams.get("city") || undefined,
+    sortBy: (searchParams.get("sort") as "relevance" | "name") || "relevance",
   });
-  const [sortBy, setSortBy] = useState<SortOption>(
-    (searchParams.get("sort") as SortOption) || "relevance"
-  );
   const [showFilters, setShowFilters] = useState(false);
-  const [results, setResults] = useState(enterprises);
 
   useEffect(() => {
-    const filtered = searchEnterprises(enterprises, filters);
-    const sorted = sortEnterprises(filtered, sortBy);
-    setResults(sorted);
-  }, [filters, sortBy]);
+    fetchCategories();
+    fetchCities();
+  }, [fetchCategories, fetchCities]);
 
-  const handleFilterChange = (key: keyof SearchFilters, value: any) => {
-    setFilters((prev) => ({ ...prev, [key]: value }));
-  };
-
-  const toggleArrayFilter = (key: "categories" | "cities" | "priceRanges" | "employeeRanges", value: any) => {
-    setFilters((prev) => {
-      const currentArray = (prev[key] || []) as any[];
-      return {
-        ...prev,
-        [key]: currentArray.includes(value)
-          ? currentArray.filter((v) => v !== value)
-          : [...currentArray, value],
-      };
-    });
-  };
-
-  const clearFilters = () => {
-    setFilters({
-      query: "",
-      categories: [],
-      cities: [],
-      priceRanges: [],
-      employeeRanges: [],
-      verified: false,
-      minRating: undefined,
-    });
-  };
+  useEffect(() => {
+    search(filters);
+  }, [filters, search]);
 
   const activeFilterCount =
-    (filters.categories?.length || 0) +
-    (filters.cities?.length || 0) +
-    (filters.priceRanges?.length || 0) +
-    (filters.employeeRanges?.length || 0) +
-    (filters.verified ? 1 : 0) +
-    (filters.minRating ? 1 : 0);
+    (filters.categoryId ? 1 : 0) + (filters.cityId ? 1 : 0);
+
+  const clearFilters = () => {
+    setFilters({ q: filters.q, sortBy: filters.sortBy });
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -85,21 +53,14 @@ export default function SearchPage() {
 
       <div className="flex flex-col gap-6 lg:flex-row">
         {/* Filters Sidebar */}
-        <aside
-          className={`lg:w-64 ${showFilters ? "block" : "hidden lg:block"}`}
-        >
+        <aside className={`lg:w-64 ${showFilters ? "block" : "hidden lg:block"}`}>
           <div className="sticky top-20 space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-bold text-gray-900 dark:text-white">
                 Filters
               </h2>
               {activeFilterCount > 0 && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={clearFilters}
-                  className="text-xs"
-                >
+                <Button variant="ghost" size="sm" onClick={clearFilters} className="text-xs">
                   Clear All
                 </Button>
               )}
@@ -108,23 +69,24 @@ export default function SearchPage() {
             {/* Categories */}
             <div>
               <h3 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
-                Categories
+                Category
               </h3>
               <div className="space-y-2">
-                {categories.slice(0, 8).map((category) => (
-                  <label
-                    key={category.slug}
-                    className="flex items-center space-x-2 text-sm"
-                  >
+                {categories.map((category) => (
+                  <label key={category.id} className="flex items-center space-x-2 text-sm">
                     <input
-                      type="checkbox"
-                      checked={filters.categories?.includes(category.slug) || false}
-                      onChange={() => toggleArrayFilter("categories", category.slug)}
+                      type="radio"
+                      name="category"
+                      checked={filters.categoryId === category.id}
+                      onChange={() =>
+                        setFilters((prev) => ({
+                          ...prev,
+                          categoryId: prev.categoryId === category.id ? undefined : category.id,
+                        }))
+                      }
                       className="rounded border-gray-300"
                     />
-                    <span className="text-gray-700 dark:text-gray-300">
-                      {category.name}
-                    </span>
+                    <span className="text-gray-700 dark:text-gray-300">{category.name}</span>
                   </label>
                 ))}
               </div>
@@ -133,62 +95,27 @@ export default function SearchPage() {
             {/* Cities */}
             <div>
               <h3 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
-                Cities
+                City
               </h3>
               <div className="space-y-2">
-                {cities.slice(0, 8).map((city) => (
-                  <label
-                    key={city.slug}
-                    className="flex items-center space-x-2 text-sm"
-                  >
+                {cities.map((city) => (
+                  <label key={city.id} className="flex items-center space-x-2 text-sm">
                     <input
-                      type="checkbox"
-                      checked={filters.cities?.includes(city.name) || false}
-                      onChange={() => toggleArrayFilter("cities", city.name)}
+                      type="radio"
+                      name="city"
+                      checked={filters.cityId === city.id}
+                      onChange={() =>
+                        setFilters((prev) => ({
+                          ...prev,
+                          cityId: prev.cityId === city.id ? undefined : city.id,
+                        }))
+                      }
                       className="rounded border-gray-300"
                     />
-                    <span className="text-gray-700 dark:text-gray-300">
-                      {city.name}
-                    </span>
+                    <span className="text-gray-700 dark:text-gray-300">{city.name}</span>
                   </label>
                 ))}
               </div>
-            </div>
-
-            {/* Verified Only */}
-            <div>
-              <label className="flex items-center space-x-2 text-sm">
-                <input
-                  type="checkbox"
-                  checked={filters.verified}
-                  onChange={(e) => handleFilterChange("verified", e.target.checked)}
-                  className="rounded border-gray-300"
-                />
-                <span className="text-gray-700 dark:text-gray-300">
-                  Verified Only
-                </span>
-              </label>
-            </div>
-
-            {/* Minimum Rating */}
-            <div>
-              <h3 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
-                Minimum Rating
-              </h3>
-              <Input
-                type="number"
-                min="0"
-                max="5"
-                step="0.5"
-                value={filters.minRating || ""}
-                onChange={(e) =>
-                  handleFilterChange(
-                    "minRating",
-                    e.target.value ? parseFloat(e.target.value) : undefined
-                  )
-                }
-                placeholder="e.g., 4.0"
-              />
             </div>
           </div>
         </aside>
@@ -207,7 +134,6 @@ export default function SearchPage() {
             </div>
 
             <div className="flex items-center gap-3">
-              {/* Mobile Filter Toggle */}
               <Button
                 variant="outline"
                 size="sm"
@@ -221,17 +147,13 @@ export default function SearchPage() {
                 )}
               </Button>
 
-              {/* Sort Dropdown */}
               <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as SortOption)}
+                value={filters.sortBy || "relevance"}
+                onChange={(e) => setFilters((prev) => ({ ...prev, sortBy: e.target.value as "relevance" | "name" }))}
                 className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900"
               >
-                {SORT_OPTIONS.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
+                <option value="relevance">Relevance</option>
+                <option value="name">Name</option>
               </select>
             </div>
           </div>
@@ -239,36 +161,22 @@ export default function SearchPage() {
           {/* Active Filters */}
           {activeFilterCount > 0 && (
             <div className="mb-6 flex flex-wrap gap-2">
-              {filters.categories?.map((slug) => {
-                const category = categories.find((c) => c.slug === slug);
-                return (
-                  <Badge key={slug} variant="secondary">
-                    {category?.name}
-                    <button
-                      onClick={() => toggleArrayFilter("categories", slug)}
-                      className="ml-1"
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                );
-              })}
-              {filters.cities?.map((city) => (
-                <Badge key={city} variant="secondary">
-                  {city}
+              {filters.categoryId && (
+                <Badge variant="secondary">
+                  {categories.find((c) => c.id === filters.categoryId)?.name}
                   <button
-                    onClick={() => toggleArrayFilter("cities", city)}
+                    onClick={() => setFilters((p) => ({ ...p, categoryId: undefined }))}
                     className="ml-1"
                   >
                     <X className="h-3 w-3" />
                   </button>
                 </Badge>
-              ))}
-              {filters.verified && (
+              )}
+              {filters.cityId && (
                 <Badge variant="secondary">
-                  Verified
+                  {cities.find((c) => c.id === filters.cityId)?.name}
                   <button
-                    onClick={() => handleFilterChange("verified", false)}
+                    onClick={() => setFilters((p) => ({ ...p, cityId: undefined }))}
                     className="ml-1"
                   >
                     <X className="h-3 w-3" />
@@ -279,10 +187,16 @@ export default function SearchPage() {
           )}
 
           {/* Results Grid */}
-          {results.length > 0 ? (
+          {searchLoading ? (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <Skeleton key={i} className="h-64 w-full rounded-lg" />
+              ))}
+            </div>
+          ) : results.length > 0 ? (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {results.map((enterprise) => (
-                <EnterpriseCard key={enterprise.slug} enterprise={enterprise} />
+                <EnterpriseCard key={enterprise.id} enterprise={enterprise} />
               ))}
             </div>
           ) : (
@@ -294,5 +208,13 @@ export default function SearchPage() {
         </main>
       </div>
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<div className="container mx-auto px-4 py-8"><Skeleton className="h-96 w-full" /></div>}>
+      <SearchContent />
+    </Suspense>
   );
 }

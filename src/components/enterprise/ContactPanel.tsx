@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
 import { Phone, Mail, Globe, MapPin, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { Enterprise } from "@/types";
 import { formatPhoneNumber } from "@/lib/format";
@@ -9,9 +8,7 @@ interface ContactPanelProps {
 }
 
 export function ContactPanel({ enterprise }: ContactPanelProps) {
-  const { contact, address } = enterprise;
-
-  const socialIcons: Record<string, any> = {
+  const socialIcons: Record<string, React.ComponentType<{ className?: string }>> = {
     facebook: Facebook,
     instagram: Instagram,
     linkedin: Linkedin,
@@ -26,7 +23,7 @@ export function ContactPanel({ enterprise }: ContactPanelProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Phone */}
-        {contact.phone && (
+        {enterprise.phone && (
           <div className="flex items-start space-x-3">
             <Phone className="mt-0.5 h-5 w-5 flex-shrink-0 text-gray-400" />
             <div>
@@ -34,17 +31,17 @@ export function ContactPanel({ enterprise }: ContactPanelProps) {
                 Phone
               </p>
               <a
-                href={`tel:${contact.phone}`}
+                href={`tel:${enterprise.phone}`}
                 className="text-blue-600 hover:underline dark:text-blue-400"
               >
-                {formatPhoneNumber(contact.phone)}
+                {formatPhoneNumber(enterprise.phone)}
               </a>
             </div>
           </div>
         )}
 
         {/* Email */}
-        {contact.email && (
+        {enterprise.email && (
           <div className="flex items-start space-x-3">
             <Mail className="mt-0.5 h-5 w-5 flex-shrink-0 text-gray-400" />
             <div>
@@ -52,17 +49,17 @@ export function ContactPanel({ enterprise }: ContactPanelProps) {
                 Email
               </p>
               <a
-                href={`mailto:${contact.email}`}
+                href={`mailto:${enterprise.email}`}
                 className="break-all text-blue-600 hover:underline dark:text-blue-400"
               >
-                {contact.email}
+                {enterprise.email}
               </a>
             </div>
           </div>
         )}
 
         {/* Website */}
-        {contact.website && (
+        {enterprise.website && (
           <div className="flex items-start space-x-3">
             <Globe className="mt-0.5 h-5 w-5 flex-shrink-0 text-gray-400" />
             <div>
@@ -70,46 +67,44 @@ export function ContactPanel({ enterprise }: ContactPanelProps) {
                 Website
               </p>
               <a
-                href={contact.website}
+                href={enterprise.website}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="break-all text-blue-600 hover:underline dark:text-blue-400"
               >
-                {contact.website.replace(/^https?:\/\//, "")}
+                {enterprise.website.replace(/^https?:\/\//, "")}
               </a>
             </div>
           </div>
         )}
 
         {/* Address */}
-        <div className="flex items-start space-x-3">
-          <MapPin className="mt-0.5 h-5 w-5 flex-shrink-0 text-gray-400" />
-          <div>
-            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-              Address
-            </p>
-            <p className="text-gray-900 dark:text-white">
-              {address.street}
-              {address.district && `, ${address.district}`}
-              <br />
-              {address.city}, {address.country}
-              {address.postalCode && ` ${address.postalCode}`}
-            </p>
+        {enterprise.address && (
+          <div className="flex items-start space-x-3">
+            <MapPin className="mt-0.5 h-5 w-5 flex-shrink-0 text-gray-400" />
+            <div>
+              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                Address
+              </p>
+              <p className="text-gray-900 dark:text-white">
+                {enterprise.address}
+              </p>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Social Links */}
-        {contact.socials && contact.socials.length > 0 && (
+        {enterprise.socials && enterprise.socials.length > 0 && (
           <div className="border-t border-gray-200 pt-4 dark:border-gray-800">
             <p className="mb-3 text-sm font-medium text-gray-500 dark:text-gray-400">
               Social Media
             </p>
             <div className="flex flex-wrap gap-2">
-              {contact.socials.map((social, index) => {
+              {enterprise.socials.map((social) => {
                 const Icon = socialIcons[social.type] || Globe;
                 return (
                   <a
-                    key={index}
+                    key={social.id}
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -122,26 +117,6 @@ export function ContactPanel({ enterprise }: ContactPanelProps) {
             </div>
           </div>
         )}
-
-        {/* Action Buttons */}
-        <div className="space-y-2 border-t border-gray-200 pt-4 dark:border-gray-800">
-          {contact.phone && (
-            <a href={`tel:${contact.phone}`}>
-              <Button className="w-full">
-                <Phone className="mr-2 h-4 w-4" />
-                Call Now
-              </Button>
-            </a>
-          )}
-          {contact.website && (
-            <a href={contact.website} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" className="w-full">
-                <Globe className="mr-2 h-4 w-4" />
-                Visit Website
-              </Button>
-            </a>
-          )}
-        </div>
       </CardContent>
     </Card>
   );

@@ -1,27 +1,59 @@
 "use client";
 
-import { use } from "react";
+import { use, useEffect } from "react";
 import { notFound } from "next/navigation";
-import { cities } from "@/data/cities.mock";
-import { enterprises } from "@/data/enterprises.mock";
+import { useLocationsStore } from "@/store/locations.api";
+import { useBusinessesStore } from "@/store/businesses.api";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { EnterpriseCard } from "@/components/enterprise/EnterpriseCard";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { MapPin } from "lucide-react";
-import { SORT_OPTIONS } from "@/lib/constants";
-import { sortEnterprises, SortOption } from "@/lib/search";
 import { useState } from "react";
+import type { Business } from "@/types/enterprise";
+
+type SortOption = "relevance" | "name";
+const SORT_OPTIONS = [
+  { value: "relevance" as const, label: "Most Relevant" },
+  { value: "name" as const, label: "Alphabetical" },
+];
+function sortEnterprises(list: Business[], sort: SortOption): Business[] {
+  if (sort === "name") return [...list].sort((a, b) => a.name.localeCompare(b.name));
+  return list;
+}
 
 export default function CityPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
-  const city = cities.find((c) => c.slug === slug);
+  const { cities, citiesLoading, fetchCities } = useLocationsStore();
+  const { businesses, listLoading: businessesLoading, fetchBusinesses } = useBusinessesStore();
   const [sortBy, setSortBy] = useState<SortOption>("relevance");
 
-  if (!city) {
+  useEffect(() => {
+    fetchCities();
+    fetchBusinesses();
+  }, [fetchCities, fetchBusinesses]);
+
+  const city = cities.find((c) => c.id === slug);
+
+  if (!citiesLoading && !city && cities.length > 0) {
     notFound();
   }
 
+  if (citiesLoading || !city) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <Skeleton className="mb-4 h-6 w-48" />
+        <Skeleton className="mb-8 h-16 w-full" />
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Skeleton key={i} className="h-64 w-full rounded-lg" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   // Filter enterprises by city
-  const cityEnterprises = enterprises.filter((e) => e.address.city === city.name);
+  const cityEnterprises = businesses.filter((e) => e.cityId === city.id);
 
   // Sort enterprises
   const sortedEnterprises = sortEnterprises(cityEnterprises, sortBy);
@@ -32,7 +64,7 @@ export default function CityPage({ params }: { params: Promise<{ slug: string }>
         items={[
           { label: "Home", href: "/" },
           { label: "Cities", href: "/cities" },
-          { label: city.name, href: `/cities/${city.slug}` },
+          { label: city.name, href: `/cities/${city.id}` },
         ]}
       />
 
@@ -47,7 +79,7 @@ export default function CityPage({ params }: { params: Promise<{ slug: string }>
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl">
                 {city.name}
               </h1>
-              <p className="text-lg text-gray-600 dark:text-gray-400">{city.region}</p>
+              <p className="text-lg text-gray-600 dark:text-gray-400">{city.country?.name ?? ""}</p>
               <p className="mt-1 text-sm text-gray-500">
                 {sortedEnterprises.length}{" "}
                 {sortedEnterprises.length === 1 ? "business" : "businesses"}
@@ -74,7 +106,7 @@ export default function CityPage({ params }: { params: Promise<{ slug: string }>
       {sortedEnterprises.length > 0 ? (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {sortedEnterprises.map((enterprise) => (
-            <EnterpriseCard key={enterprise.slug} enterprise={enterprise} />
+            <EnterpriseCard key={enterprise.id} enterprise={enterprise} />
           ))}
         </div>
       ) : (

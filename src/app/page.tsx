@@ -1,24 +1,35 @@
+"use client";
+
+import { useEffect } from "react";
 import { SearchBar } from "@/components/common/SearchBar";
 import { EnterpriseCard } from "@/components/enterprise/EnterpriseCard";
 import { CategoryCard } from "@/components/category/CategoryCard";
 import { CityCard } from "@/components/city/CityCard";
 import { Button } from "@/components/ui/Button";
-import { enterprises } from "@/data/enterprises.mock";
-import { categories } from "@/data/categories.mock";
-import { cities } from "@/data/cities.mock";
+import { Skeleton } from "@/components/ui/Skeleton";
+import { useBusinessesStore } from "@/store/businesses.api";
+import { useCategoriesStore } from "@/store/categories.api";
+import { useLocationsStore } from "@/store/locations.api";
 import { ArrowRight, TrendingUp, MapPin, Building2 } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
-  // Get featured enterprises - for now just take highly rated ones
-  const featuredEnterprises = [...enterprises]
-    .sort((a, b) => b.ratingAvg - a.ratingAvg)
-    .filter(e => e.verified)
+  const { businesses, listLoading: businessesLoading, fetchBusinesses } = useBusinessesStore();
+  const { categories, loading: categoriesLoading, fetchCategories } = useCategoriesStore();
+  const { cities, citiesLoading, fetchCities } = useLocationsStore();
+
+  useEffect(() => {
+    fetchBusinesses();
+    fetchCategories();
+    fetchCities();
+  }, [fetchBusinesses, fetchCategories, fetchCities]);
+
+  // Get featured enterprises - approved ones
+  const featuredEnterprises = businesses
+    .filter(e => e.isApproved)
     .slice(0, 6);
   
-  const topRatedEnterprises = [...enterprises]
-    .sort((a, b) => b.ratingAvg - a.ratingAvg)
-    .slice(0, 6);
+  const topRatedEnterprises = businesses.slice(0, 6);
 
   // Get popular categories and cities (first 8 of each)
   const popularCategories = categories.slice(0, 8);
@@ -55,7 +66,7 @@ export default function Home() {
             {/* Quick Stats */}
             <div className="mt-12 grid grid-cols-3 gap-4 text-center md:gap-8">
               <div>
-                <div className="text-3xl font-bold md:text-4xl">{enterprises.length}+</div>
+                <div className="text-3xl font-bold md:text-4xl">{businesses.length}+</div>
                 <div className="text-sm text-gray-400 md:text-base">Businesses</div>
               </div>
               <div>
@@ -72,7 +83,7 @@ export default function Home() {
       </section>
 
       {/* Featured Enterprises */}
-      {featuredEnterprises.length > 0 && (
+      {(businessesLoading || featuredEnterprises.length > 0) && (
         <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="mb-8 flex items-center justify-between">
@@ -93,9 +104,13 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {featuredEnterprises.map((enterprise) => (
-                <EnterpriseCard key={enterprise.slug} enterprise={enterprise} />
-              ))}
+              {businessesLoading
+                ? Array.from({ length: 6 }).map((_, i) => (
+                    <Skeleton key={i} className="h-64 w-full rounded-lg" />
+                  ))
+                : featuredEnterprises.map((enterprise) => (
+                    <EnterpriseCard key={enterprise.id} enterprise={enterprise} />
+                  ))}
             </div>
           </div>
         </section>
@@ -116,7 +131,7 @@ export default function Home() {
                 Highest rated businesses by customer reviews
               </p>
             </div>
-            <Link href="/search?sort=rating">
+            <Link href="/search">
               <Button variant="outline">
                 View All
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -125,9 +140,13 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {topRatedEnterprises.map((enterprise) => (
-              <EnterpriseCard key={enterprise.slug} enterprise={enterprise} />
-            ))}
+            {businessesLoading
+              ? Array.from({ length: 6 }).map((_, i) => (
+                  <Skeleton key={i} className="h-64 w-full rounded-lg" />
+                ))
+              : topRatedEnterprises.map((enterprise) => (
+                  <EnterpriseCard key={enterprise.id} enterprise={enterprise} />
+                ))}
           </div>
         </div>
       </section>
@@ -156,14 +175,18 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:gap-6">
-            {popularCategories.map((category) => {
-              const count = enterprises.filter(
-                (e) => e.categories.some((c) => c.slug === category.slug)
-              ).length;
-              return (
-                <CategoryCard key={category.slug} category={category} count={count} />
-              );
-            })}
+            {categoriesLoading
+              ? Array.from({ length: 8 }).map((_, i) => (
+                  <Skeleton key={i} className="h-32 w-full rounded-lg" />
+                ))
+              : popularCategories.map((category) => {
+                  const count = businesses.filter(
+                    (e) => e.categoryId === category.id
+                  ).length;
+                  return (
+                    <CategoryCard key={category.id} category={category} count={count} />
+                  );
+                })}
           </div>
         </div>
       </section>
@@ -192,10 +215,14 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:gap-6">
-            {popularCities.map((city) => {
-              const count = enterprises.filter((e) => e.address.city === city.name).length;
-              return <CityCard key={city.slug} city={city} count={count} />;
-            })}
+            {citiesLoading
+              ? Array.from({ length: 8 }).map((_, i) => (
+                  <Skeleton key={i} className="h-32 w-full rounded-lg" />
+                ))
+              : popularCities.map((city) => {
+                  const count = businesses.filter((e) => e.cityId === city.id).length;
+                  return <CityCard key={city.id} city={city} count={count} />;
+                })}
           </div>
         </div>
       </section>
@@ -209,9 +236,11 @@ export default function Home() {
           <p className="mb-8 text-lg text-gray-300">
             Join thousands of businesses on KoreaBiz Directory and reach more customers
           </p>
-          <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-gray-900">
-            List Your Business
-          </Button>
+          <Link href="/claim">
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-gray-900">
+              List Your Business
+            </Button>
+          </Link>
         </div>
       </section>
     </div>

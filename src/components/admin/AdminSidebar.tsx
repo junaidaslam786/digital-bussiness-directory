@@ -15,6 +15,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
+import { useAuthStore } from "@/store/auth.store";
 
 interface NavItem {
   title: string;
@@ -63,6 +64,7 @@ const navItems: NavItem[] = [
 export function AdminSidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const { user } = useAuthStore();
 
   return (
     <aside
@@ -120,14 +122,14 @@ export function AdminSidebar() {
       <div className="border-t border-gray-200 p-4 dark:border-gray-800">
         <div className={cn("flex items-center gap-3", collapsed && "justify-center")}>
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-sm font-semibold text-white">
-            A
+            {user?.name?.charAt(0)?.toUpperCase() ?? "A"}
           </div>
           {!collapsed && (
             <div className="flex-1 overflow-hidden">
               <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                Admin User
+                {user?.name ?? "Admin"}
               </p>
-              <p className="truncate text-xs text-gray-500">admin@koreabiz.com</p>
+              <p className="truncate text-xs text-gray-500">{user?.email ?? ""}</p>
             </div>
           )}
         </div>

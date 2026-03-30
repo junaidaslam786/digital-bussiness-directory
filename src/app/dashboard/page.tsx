@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { Skeleton } from "@/components/ui/Skeleton";
 import Link from "next/link";
 import {
     Eye,
@@ -12,47 +14,158 @@ import {
     Edit,
     Plus,
     ArrowUpRight,
+    CheckCircle2,
+    CreditCard,
+    Clock,
+    Building2,
 } from "lucide-react";
+import { useBusinessesStore } from "@/store/businesses.api";
+import { useReviewsStore } from "@/store/reviews.api";
+import { useSubscriptionsStore } from "@/store/subscriptions.api";
+import { formatRelativeTime } from "@/lib/format";
 
 export default function DashboardOverview() {
-    // Mock data for demonstration
+    const { myBusinesses, myLoading, fetchMyBusinesses } = useBusinessesStore();
+    const { reviews, fetchBusinessReviews } = useReviewsStore();
+    const { mySubscriptions, fetchMySubscriptions } = useSubscriptionsStore();
+    const [products, setProducts] = useState<{ id: string; name: string }[]>([]);
+    const { fetchProducts } = useBusinessesStore();
+
+    const business = myBusinesses[0];
+    const activeSub = mySubscriptions.find((s) => s.status === "active");
+
+    useEffect(() => {
+        fetchMyBusinesses();
+        fetchMySubscriptions();
+    }, [fetchMyBusinesses, fetchMySubscriptions]);
+
+    useEffect(() => {
+        if (business?.id) {
+            fetchBusinessReviews(business.id);
+            fetchProducts(business.id).then((p) => setProducts(p));
+        }
+    }, [business?.id, fetchBusinessReviews, fetchProducts]);
+
+    const avgRating = reviews.length > 0
+        ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length
+        : 0;
+
     const stats = {
-        views: 1247,
-        viewsTrend: 15.3,
-        rating: 4.8,
-        ratingCount: 156,
-        products: 24,
-        reviews: 89,
+        rating: avgRating,
+        ratingCount: reviews.length,
+        products: products.length,
+        reviews: reviews.length,
     };
 
-    const recentReviews = [
-        {
-            id: "1",
-            author: "John Kim",
-            rating: 5,
-            comment: "Excellent service and quality products!",
-            createdAt: "2 days ago",
-        },
-        {
-            id: "2",
-            author: "Sarah Lee",
-            rating: 4,
-            comment: "Great experience, highly recommended.",
-            createdAt: "3 days ago",
-        },
-        {
-            id: "3",
-            author: "Mike Park",
-            rating: 5,
-            comment: "Professional and reliable business.",
-            createdAt: "5 days ago",
-        },
-    ];
+    const recentReviews = reviews.slice(0, 3);
 
-    const profileCompletion = 85; // percentage
+    const profileCompletion = business ? (
+        (business.name ? 15 : 0) +
+        (business.description ? 15 : 0) +
+        (business.phone ? 10 : 0) +
+        (business.email ? 10 : 0) +
+        (business.website ? 10 : 0) +
+        (business.address ? 10 : 0) +
+        (products.length > 0 ? 15 : 0) +
+        (business.businessHours && business.businessHours.length > 0 ? 15 : 0)
+    ) : 0;
+
+    if (myLoading) {
+        return (
+            <div className="space-y-6">
+                <Skeleton className="h-10 w-64" />
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+                    {Array.from({ length: 4 }).map((_, i) => (
+                        <Skeleton key={i} className="h-28 w-full rounded-lg" />
+                    ))}
+                </div>
+                <Skeleton className="h-64 w-full rounded-lg" />
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-6">
+            {/* No Business State */}
+            {!business && !myLoading && (
+                <Card className="border-l-4 border-l-blue-500">
+                    <CardContent className="py-12 text-center">
+                        <Building2 className="mx-auto mb-4 h-12 w-12 text-blue-500" />
+                        <h2 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
+                            No Business Listing Yet
+                        </h2>
+                        <p className="mb-6 text-gray-600 dark:text-gray-400">
+                            Create your first business listing to get started.
+                        </p>
+                        <Link href="/claim">
+                            <Button className="bg-blue-600 hover:bg-blue-700">
+                                <Plus className="mr-2 h-4 w-4" />
+                                Create Business
+                            </Button>
+                        </Link>
+                    </CardContent>
+                </Card>
+            )}
+
+            {/* Business Status Banners */}
+            {business && !activeSub && (
+                <Card className="border-l-4 border-l-amber-500 animate-slide-in-up">
+                    <CardContent className="p-4">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <CreditCard className="h-5 w-5 text-amber-600" />
+                                <div>
+                                    <p className="font-medium text-gray-900 dark:text-white">Subscription Required</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                                        Your business needs an active subscription to be visible to customers.
+                                    </p>
+                                </div>
+                            </div>
+                            <Link href={`/pricing?businessId=${business.id}`}>
+                                <Button size="sm" className="bg-amber-600 hover:bg-amber-700">Choose a Plan</Button>
+                            </Link>
+                        </div>
+                    </CardContent>
+                </Card>
+            )}
+
+            {business && activeSub && !business.isApproved && (
+                <Card className="border-l-4 border-l-blue-500 animate-slide-in-up">
+                    <CardContent className="p-4">
+                        <div className="flex items-center gap-3">
+                            <Clock className="h-5 w-5 text-blue-600" />
+                            <div>
+                                <p className="font-medium text-gray-900 dark:text-white">Pending Admin Approval</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                    Your subscription is active. Your listing is being reviewed by our team and will be published once approved.
+                                    {business.rejectionReason && (
+                                        <span className="block mt-1 text-red-600 dark:text-red-400">
+                                            Rejection reason: {business.rejectionReason}
+                                        </span>
+                                    )}
+                                </p>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+            )}
+
+            {business && activeSub && business.isApproved && business.isActive && (
+                <Card className="border-l-4 border-l-emerald-500 animate-slide-in-up">
+                    <CardContent className="p-4">
+                        <div className="flex items-center gap-3">
+                            <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+                            <div>
+                                <p className="font-medium text-gray-900 dark:text-white">Business is Live</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                    Your business listing is publicly visible to customers.
+                                </p>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+            )}
+
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
@@ -60,15 +173,17 @@ export default function DashboardOverview() {
                         Dashboard Overview
                     </h1>
                     <p className="mt-2 text-gray-600 dark:text-gray-400">
-                        Welcome back! Here's how your business is performing.
+                        Welcome back! Here&apos;s how your business is performing.
                     </p>
                 </div>
-                <Link href="/dashboard/profile">
-                    <Button className="bg-emerald-600 hover:bg-emerald-700">
-                        <Edit className="mr-2 h-4 w-4" />
-                        Edit Profile
-                    </Button>
-                </Link>
+                {business && (
+                    <Link href="/dashboard/profile">
+                        <Button className="bg-emerald-600 hover:bg-emerald-700">
+                            <Edit className="mr-2 h-4 w-4" />
+                            Edit Profile
+                        </Button>
+                    </Link>
+                )}
             </div>
 
             {/* Stats Grid */}
@@ -78,13 +193,13 @@ export default function DashboardOverview() {
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                    Total Views
+                                    Business Status
                                 </p>
                                 <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
-                                    {stats.views.toLocaleString()}
+                                    {business?.isActive ? "Active" : "Inactive"}
                                 </p>
-                                <p className="mt-1 text-xs text-emerald-600 dark:text-emerald-400">
-                                    ↑ {stats.viewsTrend}% this month
+                                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                    {business?.isApproved ? "Approved" : "Pending approval"}
                                 </p>
                             </div>
                             <div className="rounded-xl bg-emerald-100 p-3 dark:bg-emerald-900/30">
@@ -274,12 +389,12 @@ export default function DashboardOverview() {
                                 className="flex items-start space-x-4 border-b border-gray-100 pb-4 last:border-0 last:pb-0 dark:border-gray-800"
                             >
                                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-sm font-semibold text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400">
-                                    {review.author.charAt(0)}
+                                    {review.authorName.charAt(0)}
                                 </div>
                                 <div className="flex-1">
                                     <div className="flex items-center justify-between">
                                         <div className="font-medium text-gray-900 dark:text-white">
-                                            {review.author}
+                                            {review.authorName}
                                         </div>
                                         <div className="flex">
                                             {[1, 2, 3, 4, 5].map((star) => (
@@ -297,7 +412,7 @@ export default function DashboardOverview() {
                                         {review.comment}
                                     </p>
                                     <p className="mt-1 text-xs text-gray-500 dark:text-gray-500">
-                                        {review.createdAt}
+                                        {formatRelativeTime(review.createdAt)}
                                     </p>
                                 </div>
                             </div>

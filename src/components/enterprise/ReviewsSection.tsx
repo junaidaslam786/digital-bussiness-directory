@@ -1,21 +1,25 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
+"use client";
+
+import { useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/Card";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { RatingStars } from "@/components/common/RatingStars";
-import { reviews } from "@/data/reviews.mock";
-import { enterprises } from "@/data/enterprises.mock";
+import { useReviewsStore } from "@/store/reviews.api";
 import { formatRelativeTime } from "@/lib/format";
 import { User } from "lucide-react";
 
 interface ReviewsSectionProps {
-  enterpriseSlug: string;
+  businessId: string;
 }
 
-export function ReviewsSection({ enterpriseSlug }: ReviewsSectionProps) {
-  // Find enterprise by slug to get the ID
-  const enterprise = enterprises.find((e) => e.slug === enterpriseSlug);
-  const enterpriseReviews = enterprise 
-    ? reviews.filter((r) => r.enterpriseId === enterprise.id)
-    : [];
+export function ReviewsSection({ businessId }: ReviewsSectionProps) {
+  const { reviews, loading, fetchBusinessReviews } = useReviewsStore();
+
+  useEffect(() => {
+    fetchBusinessReviews(businessId);
+  }, [businessId, fetchBusinessReviews]);
+
+  const enterpriseReviews = reviews;
 
   // Calculate rating distribution
   const distribution = [5, 4, 3, 2, 1].map((rating) => ({
@@ -28,6 +32,16 @@ export function ReviewsSection({ enterpriseSlug }: ReviewsSectionProps) {
           100
         : 0,
   }));
+
+  if (loading) {
+    return (
+      <div className="space-y-4">
+        <Skeleton className="h-8 w-48" />
+        <Skeleton className="h-48 w-full rounded-lg" />
+        <Skeleton className="h-32 w-full rounded-lg" />
+      </div>
+    );
+  }
 
   if (enterpriseReviews.length === 0) {
     return (

@@ -4,46 +4,54 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Badge } from "@/components/ui/Badge";
-import { reviews } from "@/data/reviews.mock";
-import { enterprises } from "@/data/enterprises.mock";
+import { useAdminStore } from "@/store/admin.api";
 import {
     Search,
     Star,
     ThumbsUp,
-    ThumbsDown,
     Trash2,
     MessageSquare,
     Filter,
+    Loader2,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatDistanceToNow } from "@/lib/time";
 
 export default function ReviewsPage() {
     const [searchQuery, setSearchQuery] = useState("");
 
-    // Enhanced reviews with enterprise info
-    const enhancedReviews = reviews.map((review) => {
-        const enterprise = enterprises.find((e) => e.id === review.enterpriseId);
-        return {
-            ...review,
-            enterpriseName: enterprise?.name || "Unknown",
-            enterpriseSlug: enterprise?.slug || "",
-        };
-    });
+    const { reviews, reviewsLoading, fetchReviews, deleteReview } = useAdminStore();
 
-    // Filter reviews
-    const filteredReviews = enhancedReviews.filter(
+    useEffect(() => {
+        fetchReviews();
+    }, [fetchReviews]);
+
+    const filteredReviews = reviews.filter(
         (review) =>
             review.authorName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            review.enterpriseName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            review.comment.toLowerCase().includes(searchQuery.toLowerCase())
+            (review.business?.name ?? "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+            review.comment?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    // Calculate stats
     const avgRating =
-        reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+        reviews.length > 0
+            ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+            : 0;
     const positiveReviews = reviews.filter((r) => r.rating >= 4).length;
     const negativeReviews = reviews.filter((r) => r.rating <= 2).length;
+
+    const handleDelete = async (id: string) => {
+        if (!confirm("Delete this review?")) return;
+        try { await deleteReview(id); } catch {}
+    };
+
+    if (reviewsLoading && reviews.length === 0) {
+        return (
+            <div className="flex h-96 items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-6">
@@ -145,7 +153,7 @@ export default function ReviewsPage() {
                                             <div className="text-sm text-gray-500 dark:text-gray-400">
                                                 reviewed{" "}
                                                 <span className="font-medium text-blue-600 dark:text-blue-400">
-                                                    {review.enterpriseName}
+                                                    {review.business?.name ?? "Unknown"}
                                                 </span>
                                             </div>
                                         </div>
@@ -196,7 +204,7 @@ export default function ReviewsPage() {
                                         <Button variant="ghost" size="sm">
                                             <MessageSquare className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                                         </Button>
-                                        <Button variant="ghost" size="sm">
+                                        <Button variant="ghost" size="sm" onClick={() => handleDelete(review.id)}>
                                             <Trash2 className="h-4 w-4 text-red-600 dark:text-red-400" />
                                         </Button>
                                     </div>

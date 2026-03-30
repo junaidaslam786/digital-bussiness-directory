@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { GalleryImage } from "@/types";
-import { getCategoryImage, getEnterpriseImage } from "@/lib/images";
 
 interface GalleryCarouselProps {
   images: GalleryImage[];
@@ -40,8 +38,8 @@ export function GalleryCarousel({ images }: GalleryCarouselProps) {
           <AnimatePresence mode="wait">
             <motion.img
               key={currentIndex}
-              src={images[currentIndex].url}
-              alt={images[currentIndex].alt}
+              src={images[currentIndex].mediaUrl}
+              alt={images[currentIndex].mediaUrl}
               className="h-full w-full cursor-pointer object-cover"
               onClick={() => setIsLightboxOpen(true)}
               initial={{ opacity: 0 }}
@@ -93,8 +91,8 @@ export function GalleryCarousel({ images }: GalleryCarouselProps) {
                 }`}
               >
                 <img
-                  src={image.url}
-                  alt={image.alt}
+                  src={image.mediaUrl}
+                  alt={`Image ${index + 1}`}
                   className="h-20 w-20 object-cover"
                 />
               </button>
@@ -123,8 +121,8 @@ export function GalleryCarousel({ images }: GalleryCarouselProps) {
             </Button>
 
             <motion.img
-              src={images[currentIndex].url}
-              alt={images[currentIndex].alt}
+              src={images[currentIndex].mediaUrl}
+              alt={images[currentIndex].mediaUrl}
               className="max-h-full max-w-full object-contain"
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}

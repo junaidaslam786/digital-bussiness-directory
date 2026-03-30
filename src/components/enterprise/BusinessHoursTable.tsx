@@ -1,15 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
-import { BusinessHours } from "@/types";
+import type { BusinessHour, DayOfWeek } from "@/types";
 import { Clock } from "lucide-react";
-import { getOpenStatus } from "@/lib/time";
+import { getOpenStatus, formatBusinessHours } from "@/lib/time";
 
 interface BusinessHoursTableProps {
-  hours: BusinessHours;
+  hours: BusinessHour[];
 }
 
 export function BusinessHoursTable({ hours }: BusinessHoursTableProps) {
-  const days = [
+  const days: { key: DayOfWeek; label: string }[] = [
     { key: "mon", label: "Monday" },
     { key: "tue", label: "Tuesday" },
     { key: "wed", label: "Wednesday" },
@@ -21,7 +21,7 @@ export function BusinessHoursTable({ hours }: BusinessHoursTableProps) {
 
   const openStatus = getOpenStatus(hours);
   const today = new Date().getDay();
-  const todayKey = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"][today];
+  const todayKey = (["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const)[today];
 
   return (
     <Card>
@@ -44,7 +44,7 @@ export function BusinessHoursTable({ hours }: BusinessHoursTableProps) {
       <CardContent>
         <div className="space-y-2">
           {days.map(({ key, label }) => {
-            const dayHours = hours[key as keyof BusinessHours];
+            const dayHour = hours.find((h) => h.dayOfWeek === key);
             const isToday = key === todayKey;
 
             return (
@@ -69,14 +69,12 @@ export function BusinessHoursTable({ hours }: BusinessHoursTableProps) {
                   className={`text-sm ${
                     isToday
                       ? "text-blue-900 dark:text-blue-100"
-                      : dayHours.closed
+                      : !dayHour || dayHour.isClosed
                       ? "text-red-600 dark:text-red-400"
                       : "text-gray-900 dark:text-white"
                   }`}
                 >
-                  {dayHours.closed
-                    ? "Closed"
-                    : `${dayHours.open} - ${dayHours.close}`}
+                  {dayHour ? formatBusinessHours(dayHour) : "Not set"}
                 </span>
               </div>
             );

@@ -1,11 +1,15 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
+/**
+ * Compare store – uses business IDs (UUID) aligned with backend Business.id.
+ * Backend has no slug field on businesses, so we use the UUID for identification.
+ */
 interface CompareState {
-  compareSlugs: string[];
-  addToCompare: (slug: string) => boolean;
-  removeFromCompare: (slug: string) => void;
-  isInCompare: (slug: string) => boolean;
+  compareIds: string[];
+  addToCompare: (businessId: string) => boolean;
+  removeFromCompare: (businessId: string) => void;
+  isInCompare: (businessId: string) => boolean;
   clearCompare: () => void;
   canAddMore: () => boolean;
 }
@@ -15,38 +19,38 @@ const MAX_COMPARE = 4;
 export const useCompareStore = create<CompareState>()(
   persist(
     (set, get) => ({
-      compareSlugs: [],
+      compareIds: [],
 
-      addToCompare: (slug) => {
+      addToCompare: (businessId) => {
         const state = get();
-        if (state.compareSlugs.length >= MAX_COMPARE) {
+        if (state.compareIds.length >= MAX_COMPARE) {
           return false;
         }
-        if (state.compareSlugs.includes(slug)) {
+        if (state.compareIds.includes(businessId)) {
           return false;
         }
         set((state) => ({
-          compareSlugs: [...state.compareSlugs, slug],
+          compareIds: [...state.compareIds, businessId],
         }));
         return true;
       },
 
-      removeFromCompare: (slug) => {
+      removeFromCompare: (businessId) => {
         set((state) => ({
-          compareSlugs: state.compareSlugs.filter((s) => s !== slug),
+          compareIds: state.compareIds.filter((id) => id !== businessId),
         }));
       },
 
-      isInCompare: (slug) => {
-        return get().compareSlugs.includes(slug);
+      isInCompare: (businessId) => {
+        return get().compareIds.includes(businessId);
       },
 
       clearCompare: () => {
-        set({ compareSlugs: [] });
+        set({ compareIds: [] });
       },
 
       canAddMore: () => {
-        return get().compareSlugs.length < MAX_COMPARE;
+        return get().compareIds.length < MAX_COMPARE;
       },
     }),
     {
@@ -55,3 +59,8 @@ export const useCompareStore = create<CompareState>()(
     }
   )
 );
+
+// ── Selectors ──
+export const selectCompareIds = (s: CompareState) => s.compareIds;
+export const selectCompareCount = (s: CompareState) => s.compareIds.length;
+export const selectCanAddMore = (s: CompareState) => s.compareIds.length < MAX_COMPARE;

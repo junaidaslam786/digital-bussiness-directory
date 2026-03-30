@@ -1,34 +1,64 @@
 "use client";
 
-import { use } from "react";
+import { use, useEffect } from "react";
 import { notFound } from "next/navigation";
-import { categories } from "@/data/categories.mock";
-import { enterprises } from "@/data/enterprises.mock";
+import { useCategoriesStore } from "@/store/categories.api";
+import { useBusinessesStore } from "@/store/businesses.api";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { EnterpriseCard } from "@/components/enterprise/EnterpriseCard";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { SORT_OPTIONS } from "@/lib/constants";
-import { sortEnterprises, SortOption } from "@/lib/search";
+import { Skeleton } from "@/components/ui/Skeleton";
 import * as Icons from "lucide-react";
 import { LucideIcon } from "lucide-react";
 import { useState } from "react";
+import type { Business } from "@/types/enterprise";
+
+type SortOption = "relevance" | "name";
+const SORT_OPTIONS = [
+  { value: "relevance" as const, label: "Most Relevant" },
+  { value: "name" as const, label: "Alphabetical" },
+];
+function sortEnterprises(list: Business[], sort: SortOption): Business[] {
+  if (sort === "name") return [...list].sort((a, b) => a.name.localeCompare(b.name));
+  return list;
+}
 
 export default function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
-  const category = categories.find((c) => c.slug === slug);
+  const { categories, loading: categoriesLoading, fetchCategories } = useCategoriesStore();
+  const { businesses, listLoading: businessesLoading, fetchBusinesses } = useBusinessesStore();
   const [sortBy, setSortBy] = useState<SortOption>("relevance");
 
-  if (!category) {
+  useEffect(() => {
+    fetchCategories();
+    fetchBusinesses();
+  }, [fetchCategories, fetchBusinesses]);
+
+  const category = categories.find((c) => c.slug === slug);
+
+  if (!categoriesLoading && !category && categories.length > 0) {
     notFound();
+  }
+
+  if (categoriesLoading || !category) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <Skeleton className="mb-4 h-6 w-48" />
+        <Skeleton className="mb-8 h-16 w-full" />
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Skeleton key={i} className="h-64 w-full rounded-lg" />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   // Get icon component
   const IconComponent = (Icons[category.icon as keyof typeof Icons] as LucideIcon) || Icons.Building2;
 
   // Filter enterprises by category
-  const categoryEnterprises = enterprises.filter((e) =>
-    e.categories.some((c) => c.slug === category.slug)
+  const categoryEnterprises = businesses.filter((e) =>
+    e.categoryId === category.id
   );
 
   // Sort enterprises
@@ -84,7 +114,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
       {sortedEnterprises.length > 0 ? (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {sortedEnterprises.map((enterprise) => (
-            <EnterpriseCard key={enterprise.slug} enterprise={enterprise} />
+            <EnterpriseCard key={enterprise.id} enterprise={enterprise} />
           ))}
         </div>
       ) : (

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Building2, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Building2 } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -19,20 +19,6 @@ export function Footer() {
             <p className="text-sm text-gray-600 dark:text-gray-400">
               South Korea's premier business directory connecting enterprises across the nation.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                <Linkedin className="h-5 w-5" />
-              </a>
-            </div>
           </div>
 
           {/* For Businesses */}
@@ -47,14 +33,14 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/admin" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <Link href="/login" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
                   Business Owner Login
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                  Advertise
-                </a>
+                <Link href="/pricing" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                  Pricing Plans
+                </Link>
               </li>
             </ul>
           </div>
@@ -90,24 +76,14 @@ export function Footer() {
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <Link href="/search" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <Link href="/search" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
                   Contact
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                  Terms of Service
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -115,7 +91,7 @@ export function Footer() {
 
         <div className="mt-8 border-t border-gray-200 pt-8 dark:border-gray-800">
           <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-            © {currentYear} KoreaBiz Directory. All rights reserved.
+            &copy; {currentYear} KoreaBiz Directory. All rights reserved.
           </p>
         </div>
       </div>

@@ -1,22 +1,27 @@
 "use client";
 
+import { useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { RatingStars } from "@/components/common/RatingStars";
 import { useCompareStore } from "@/store/compare.store";
-import { enterprises } from "@/data/enterprises.mock";
-import { GitCompare, X, MapPin, Phone, Mail, Globe, Clock } from "lucide-react";
+import { useBusinessesStore } from "@/store/businesses.api";
+import { GitCompare, X, MapPin } from "lucide-react";
 import Link from "next/link";
 import { formatPhoneNumber } from "@/lib/format";
 import { getOpenStatus } from "@/lib/time";
 
 export default function ComparePage() {
-  const { compareSlugs, removeFromCompare, clearCompare } = useCompareStore();
+  const { compareIds, removeFromCompare, clearCompare } = useCompareStore();
+  const { businesses, listLoading, fetchBusinesses } = useBusinessesStore();
 
-  const compareEnterprises = enterprises.filter((e) =>
-    compareSlugs.includes(e.slug)
+  useEffect(() => {
+    fetchBusinesses();
+  }, [fetchBusinesses]);
+
+  const compareEnterprises = businesses.filter((e) =>
+    compareIds.includes(e.id)
   );
 
   if (compareEnterprises.length === 0) {
@@ -60,11 +65,9 @@ export default function ComparePage() {
             </p>
           </div>
         </div>
-        {compareEnterprises.length > 0 && (
-          <Button variant="outline" onClick={clearCompare}>
-            Clear All
-          </Button>
-        )}
+        <Button variant="outline" onClick={clearCompare}>
+          Clear All
+        </Button>
       </div>
 
       {/* Comparison Table */}
@@ -77,18 +80,18 @@ export default function ComparePage() {
               </th>
               {compareEnterprises.map((enterprise) => (
                 <th
-                  key={enterprise.slug}
+                  key={enterprise.id}
                   className="border-b-2 border-gray-200 bg-gray-50 p-4 text-left dark:border-gray-800 dark:bg-gray-900"
                 >
                   <div className="flex items-start justify-between">
                     <Link
-                      href={`/enterprises/${enterprise.slug}`}
+                      href={`/enterprises/${enterprise.id}`}
                       className="font-semibold text-gray-900 hover:text-blue-600 dark:text-white dark:hover:text-blue-400"
                     >
                       {enterprise.name}
                     </Link>
                     <button
-                      onClick={() => removeFromCompare(enterprise.slug)}
+                      onClick={() => removeFromCompare(enterprise.id)}
                       className="ml-2 text-gray-400 hover:text-red-500"
                     >
                       <X className="h-4 w-4" />
@@ -99,45 +102,6 @@ export default function ComparePage() {
             </tr>
           </thead>
           <tbody>
-            {/* Image */}
-            <tr>
-              <td className="border-b border-gray-200 p-4 font-medium text-gray-700 dark:border-gray-800 dark:text-gray-300">
-                Image
-              </td>
-              {compareEnterprises.map((enterprise) => (
-                <td
-                  key={enterprise.slug}
-                  className="border-b border-gray-200 p-4 dark:border-gray-800"
-                >
-                  {enterprise.gallery[0] && (
-                    <img
-                      src={enterprise.gallery[0].url}
-                      alt={enterprise.gallery[0].alt}
-                      className="h-32 w-full rounded-lg object-cover"
-                    />
-                  )}
-                </td>
-              ))}
-            </tr>
-
-            {/* Rating */}
-            <tr>
-              <td className="border-b border-gray-200 p-4 font-medium text-gray-700 dark:border-gray-800 dark:text-gray-300">
-                Rating
-              </td>
-              {compareEnterprises.map((enterprise) => (
-                <td
-                  key={enterprise.slug}
-                  className="border-b border-gray-200 p-4 dark:border-gray-800"
-                >
-                  <RatingStars rating={enterprise.ratingAvg} showNumber />
-                  <div className="mt-1 text-xs text-gray-500">
-                    {enterprise.ratingCount} reviews
-                  </div>
-                </td>
-              ))}
-            </tr>
-
             {/* Category */}
             <tr>
               <td className="border-b border-gray-200 p-4 font-medium text-gray-700 dark:border-gray-800 dark:text-gray-300">
@@ -145,16 +109,12 @@ export default function ComparePage() {
               </td>
               {compareEnterprises.map((enterprise) => (
                 <td
-                  key={enterprise.slug}
+                  key={enterprise.id}
                   className="border-b border-gray-200 p-4 dark:border-gray-800"
                 >
-                  <div className="flex flex-wrap gap-1">
-                    {enterprise.categories.map((cat) => (
-                      <Badge key={cat.slug} variant="secondary">
-                        {cat.name}
-                      </Badge>
-                    ))}
-                  </div>
+                  {enterprise.category && (
+                    <Badge variant="secondary">{enterprise.category.name}</Badge>
+                  )}
                 </td>
               ))}
             </tr>
@@ -166,12 +126,12 @@ export default function ComparePage() {
               </td>
               {compareEnterprises.map((enterprise) => (
                 <td
-                  key={enterprise.slug}
+                  key={enterprise.id}
                   className="border-b border-gray-200 p-4 text-sm dark:border-gray-800"
                 >
                   <div className="flex items-start space-x-2">
                     <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-gray-400" />
-                    <span>{enterprise.address.city}</span>
+                    <span>{enterprise.address ?? "N/A"}</span>
                   </div>
                 </td>
               ))}
@@ -183,10 +143,12 @@ export default function ComparePage() {
                 Status
               </td>
               {compareEnterprises.map((enterprise) => {
-                const status = getOpenStatus(enterprise.hours);
+                const status = enterprise.businessHours
+                  ? getOpenStatus(enterprise.businessHours)
+                  : { isOpen: false, message: "Hours not available" };
                 return (
                   <td
-                    key={enterprise.slug}
+                    key={enterprise.id}
                     className="border-b border-gray-200 p-4 dark:border-gray-800"
                   >
                     <Badge variant={status.isOpen ? "success" : "destructive"}>
@@ -197,39 +159,20 @@ export default function ComparePage() {
               })}
             </tr>
 
-            {/* Verified */}
+            {/* Approved */}
             <tr>
               <td className="border-b border-gray-200 p-4 font-medium text-gray-700 dark:border-gray-800 dark:text-gray-300">
-                Verified
+                Approved
               </td>
               {compareEnterprises.map((enterprise) => (
                 <td
-                  key={enterprise.slug}
+                  key={enterprise.id}
                   className="border-b border-gray-200 p-4 dark:border-gray-800"
                 >
-                  {enterprise.verified ? (
-                    <Badge variant="success">✓ Verified</Badge>
+                  {enterprise.isApproved ? (
+                    <Badge variant="success">Approved</Badge>
                   ) : (
-                    <span className="text-sm text-gray-500">Not verified</span>
-                  )}
-                </td>
-              ))}
-            </tr>
-
-            {/* Price Range */}
-            <tr>
-              <td className="border-b border-gray-200 p-4 font-medium text-gray-700 dark:border-gray-800 dark:text-gray-300">
-                Price Range
-              </td>
-              {compareEnterprises.map((enterprise) => (
-                <td
-                  key={enterprise.slug}
-                  className="border-b border-gray-200 p-4 dark:border-gray-800"
-                >
-                  {enterprise.priceRange ? (
-                    <span className="text-lg">{"$".repeat(enterprise.priceRange)}</span>
-                  ) : (
-                    <span className="text-sm text-gray-500">N/A</span>
+                    <span className="text-sm text-gray-500">Pending</span>
                   )}
                 </td>
               ))}
@@ -242,15 +185,15 @@ export default function ComparePage() {
               </td>
               {compareEnterprises.map((enterprise) => (
                 <td
-                  key={enterprise.slug}
+                  key={enterprise.id}
                   className="border-b border-gray-200 p-4 text-sm dark:border-gray-800"
                 >
-                  {enterprise.contact.phone ? (
+                  {enterprise.phone ? (
                     <a
-                      href={`tel:${enterprise.contact.phone}`}
+                      href={`tel:${enterprise.phone}`}
                       className="text-blue-600 hover:underline dark:text-blue-400"
                     >
-                      {formatPhoneNumber(enterprise.contact.phone)}
+                      {formatPhoneNumber(enterprise.phone)}
                     </a>
                   ) : (
                     <span className="text-gray-500">N/A</span>
@@ -266,12 +209,12 @@ export default function ComparePage() {
               </td>
               {compareEnterprises.map((enterprise) => (
                 <td
-                  key={enterprise.slug}
+                  key={enterprise.id}
                   className="border-b border-gray-200 p-4 text-sm dark:border-gray-800"
                 >
-                  {enterprise.contact.website ? (
+                  {enterprise.website ? (
                     <a
-                      href={enterprise.contact.website}
+                      href={enterprise.website}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:underline dark:text-blue-400"

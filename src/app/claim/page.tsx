@@ -1,29 +1,34 @@
 "use client";
 
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
 import { Building2, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
-import { categories } from "@/data/categories.mock";
+import { useCategoriesStore } from "@/store/categories.api";
+import { useBusinessesStore } from "@/store/businesses.api";
+import { useLocationsStore } from "@/store/locations.api";
+import { useAuthStore } from "@/store/auth.store";
 
 const claimBusinessSchema = z.object({
   businessName: z.string().min(2, "Business name must be at least 2 characters"),
   legalName: z.string().optional(),
   category: z.string().min(1, "Please select a category"),
+  countryId: z.string().min(1, "Please select a country"),
+  cityId: z.string().min(1, "Please select a city"),
   yourName: z.string().min(2, "Your name is required"),
   email: z.string().email("Invalid email address"),
   phone: z.string().min(10, "Please enter a valid phone number"),
   position: z.string().min(2, "Your position is required"),
   website: z.string().url("Please enter a valid URL").optional().or(z.literal("")),
   address: z.string().min(5, "Please enter a complete address"),
-  city: z.string().min(2, "City is required"),
   description: z.string().min(20, "Description must be at least 20 characters"),
   proofOfOwnership: z.string().min(10, "Please explain how you can verify ownership"),
 });
@@ -31,7 +36,21 @@ const claimBusinessSchema = z.object({
 type ClaimBusinessForm = z.infer<typeof claimBusinessSchema>;
 
 export default function ClaimBusinessPage() {
+  const router = useRouter();
   const [submitted, setSubmitted] = useState(false);
+  const [createdBusinessId, setCreatedBusinessId] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const { categories, fetchCategories } = useCategoriesStore();
+  const { createBusiness } = useBusinessesStore();
+  const { countries, cities, fetchCountries, fetchCities } = useLocationsStore();
+  const { isAuthenticated } = useAuthStore();
+
+  useEffect(() => {
+    fetchCategories();
+    fetchCountries();
+    fetchCities();
+  }, [fetchCategories, fetchCountries, fetchCities]);
+
   const {
     register,
     handleSubmit,
@@ -42,11 +61,25 @@ export default function ClaimBusinessPage() {
   });
 
   const onSubmit = async (data: ClaimBusinessForm) => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log("Claim submitted:", data);
-    setSubmitted(true);
-    reset();
+    setSubmitError(null);
+    try {
+      const business = await createBusiness({
+        name: data.businessName,
+        categoryId: data.category,
+        countryId: data.countryId,
+        cityId: data.cityId,
+        description: data.description,
+        phone: data.phone,
+        email: data.email,
+        website: data.website || undefined,
+        address: data.address,
+      });
+      setCreatedBusinessId(business.id);
+      setSubmitted(true);
+      reset();
+    } catch (err) {
+      setSubmitError((err as Error).message || "Failed to submit claim. Please try again.");
+    }
   };
 
   if (submitted) {
@@ -63,17 +96,21 @@ export default function ClaimBusinessPage() {
           <CardContent className="py-12 text-center">
             <CheckCircle2 className="mx-auto mb-4 h-16 w-16 text-green-500" />
             <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
-              Claim Submitted Successfully!
+              Business Created Successfully!
             </h2>
             <p className="mb-6 text-gray-600 dark:text-gray-400">
-              Thank you for claiming your business. Our team will review your submission and
-              contact you within 2-3 business days.
+              Your business listing has been created. Now choose a subscription plan to
+              activate it. Once subscribed, our team will review and approve your listing.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-              <Button onClick={() => setSubmitted(false)}>Submit Another Claim</Button>
-              <a href="/">
-                <Button variant="outline">Back to Home</Button>
-              </a>
+              {createdBusinessId && (
+                <Button onClick={() => router.push(`/pricing?businessId=${createdBusinessId}`)} className="bg-blue-600 hover:bg-blue-700">
+                  Choose a Plan
+                </Button>
+              )}
+              <Button variant="outline" onClick={() => router.push("/dashboard")}>
+                Go to Dashboard
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -184,7 +221,7 @@ export default function ClaimBusinessPage() {
                   >
                     <option value="">Select a category</option>
                     {categories.map((cat) => (
-                      <option key={cat.slug} value={cat.slug}>
+                      <option key={cat.id} value={cat.id}>
                         {cat.name}
                       </option>
                     ))}
@@ -220,11 +257,41 @@ export default function ClaimBusinessPage() {
 
                 <div>
                   <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Country *
+                  </label>
+                  <select
+                    {...register("countryId")}
+                    className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900"
+                  >
+                    <option value="">Select a country</option>
+                    {countries.map((country) => (
+                      <option key={country.id} value={country.id}>
+                        {country.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.countryId && (
+                    <p className="mt-1 text-sm text-red-600">{errors.countryId.message}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     City *
                   </label>
-                  <Input {...register("city")} placeholder="Seoul" />
-                  {errors.city && (
-                    <p className="mt-1 text-sm text-red-600">{errors.city.message}</p>
+                  <select
+                    {...register("cityId")}
+                    className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900"
+                  >
+                    <option value="">Select a city</option>
+                    {cities.map((city) => (
+                      <option key={city.id} value={city.id}>
+                        {city.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.cityId && (
+                    <p className="mt-1 text-sm text-red-600">{errors.cityId.message}</p>
                   )}
                 </div>
 
@@ -319,6 +386,11 @@ export default function ClaimBusinessPage() {
             </div>
 
             {/* Submit */}
+            {submitError && (
+              <div className="rounded-md bg-red-50 p-4 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400">
+                {submitError}
+              </div>
+            )}
             <div className="flex items-center justify-end space-x-4 border-t border-gray-200 pt-6 dark:border-gray-800">
               <Button type="button" variant="outline" onClick={() => reset()}>
                 Clear Form

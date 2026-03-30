@@ -15,8 +15,11 @@ import {
     Settings,
     ChevronLeft,
     ChevronRight,
+    CreditCard,
+    IdCard,
 } from "lucide-react";
 import { useState } from "react";
+import { useBusinessesStore } from "@/store/businesses.api";
 
 interface NavItem {
     title: string;
@@ -66,6 +69,16 @@ const navItems: NavItem[] = [
         icon: BarChart3,
     },
     {
+        title: "Business Card",
+        href: "/dashboard/business-card",
+        icon: IdCard,
+    },
+    {
+        title: "Subscription",
+        href: "/dashboard/subscription",
+        icon: CreditCard,
+    },
+    {
         title: "Settings",
         href: "/dashboard/settings",
         icon: Settings,
@@ -75,6 +88,8 @@ const navItems: NavItem[] = [
 export function EnterpriseSidebar() {
     const pathname = usePathname();
     const [collapsed, setCollapsed] = useState(false);
+    const { myBusinesses } = useBusinessesStore();
+    const business = myBusinesses[0];
 
     return (
         <aside
@@ -132,14 +147,14 @@ export function EnterpriseSidebar() {
             <div className="border-t border-gray-200 p-4 dark:border-gray-800">
                 <div className={cn("flex items-center gap-3", collapsed && "justify-center")}>
                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-600 text-sm font-semibold text-white">
-                        B
+                        {business?.name?.charAt(0)?.toUpperCase() ?? "B"}
                     </div>
                     {!collapsed && (
                         <div className="flex-1 overflow-hidden">
                             <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
-                                Sample Business
+                                {business?.name ?? "My Business"}
                             </p>
-                            <p className="truncate text-xs text-gray-500">Seoul, South Korea</p>
+                            <p className="truncate text-xs text-gray-500">{business?.cityEntity?.name ?? ""}</p>
                         </div>
                     )}
                 </div>
