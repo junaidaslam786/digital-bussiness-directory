@@ -14,9 +14,10 @@ import {
     List,
     Save,
     X,
+    Upload,
 } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useBusinessesStore } from "@/store/businesses.api";
 import type { BusinessProduct } from "@/types/enterprise";
 import { formatCurrency } from "@/lib/format";
@@ -24,11 +25,14 @@ import { formatCurrency } from "@/lib/format";
 export default function ProductsPage() {
     const [searchQuery, setSearchQuery] = useState("");
     const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-    const { myBusinesses, myLoading, fetchMyBusinesses, fetchProducts, deleteProduct, updateProduct } = useBusinessesStore();
+    const { myBusinesses, myLoading, fetchMyBusinesses, fetchProducts, deleteProduct, updateProduct, uploadMedia } = useBusinessesStore();
     const [products, setProducts] = useState<BusinessProduct[]>([]);
     const [loading, setLoading] = useState(true);
     const [editingProduct, setEditingProduct] = useState<BusinessProduct | null>(null);
     const [editForm, setEditForm] = useState({ name: "", description: "", price: "", sku: "" });
+    const [editImageFile, setEditImageFile] = useState<File | null>(null);
+    const [editImagePreview, setEditImagePreview] = useState<string | null>(null);
+    const editImageRef = useRef<HTMLInputElement>(null);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -66,6 +70,8 @@ export default function ProductsPage() {
             price: product.price != null ? String(product.price) : "",
             sku: product.sku ?? "",
         });
+        setEditImageFile(null);
+        setEditImagePreview(product.imageUrl || null);
     };
 
     const handleSaveEdit = async () => {
@@ -73,11 +79,17 @@ export default function ProductsPage() {
         setSaving(true);
         setError(null);
         try {
+            let imageUrl = editingProduct.imageUrl;
+            if (editImageFile) {
+                const media = await uploadMedia(business.id, editImageFile, "image");
+                imageUrl = media.mediaUrl;
+            }
             const updated = await updateProduct(business.id, editingProduct.id, {
                 name: editForm.name,
                 description: editForm.description || undefined,
                 price: editForm.price ? Number(editForm.price) : undefined,
                 sku: editForm.sku || undefined,
+                imageUrl: imageUrl || undefined,
             });
             setProducts((prev) => prev.map((p) => (p.id === editingProduct.id ? updated : p)));
             setEditingProduct(null);
@@ -307,7 +319,7 @@ export default function ProductsPage() {
             {/* Edit Product Modal */}
             {editingProduct && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                    <Card className="w-full max-w-lg">
+                    <Card className="w-full max-w-lg max-h-[90vh] overflow-y-auto">
                         <CardContent className="p-6">
                             <h2 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">Edit Product</h2>
                             <div className="space-y-4">
@@ -328,6 +340,49 @@ export default function ProductsPage() {
                                         <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">SKU</label>
                                         <Input value={editForm.sku} onChange={(e) => setEditForm({ ...editForm, sku: e.target.value })} />
                                     </div>
+                                </div>
+                                {/* Image Upload */}
+                                <div>
+                                    <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Product Image</label>
+                                    <input
+                                        ref={editImageRef}
+                                        type="file"
+                                        accept="image/jpeg,image/png,image/webp"
+                                        className="hidden"
+                                        onChange={(e) => {
+                                            const file = e.target.files?.[0];
+                                            if (file) {
+                                                setEditImageFile(file);
+                                                setEditImagePreview(URL.createObjectURL(file));
+                                            }
+                                        }}
+                                    />
+                                    {editImagePreview ? (
+                                        <div className="relative">
+                                            <img src={editImagePreview} alt="Product" className="aspect-video w-full rounded-lg object-cover" />
+                                            <button
+                                                onClick={() => { setEditImageFile(null); setEditImagePreview(null); if (editImageRef.current) editImageRef.current.value = ""; }}
+                                                className="absolute right-2 top-2 rounded-full bg-red-600 p-1 text-white hover:bg-red-700"
+                                            >
+                                                <X className="h-3 w-3" />
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div
+                                            className="flex h-32 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 transition-colors hover:border-emerald-400 dark:border-gray-700"
+                                            onClick={() => editImageRef.current?.click()}
+                                        >
+                                            <div className="text-center">
+                                                <Upload className="mx-auto h-8 w-8 text-gray-400" />
+                                                <p className="mt-1 text-xs text-gray-500">Click to upload</p>
+                                            </div>
+                                        </div>
+                                    )}
+                                    {editImagePreview && (
+                                        <Button variant="outline" size="sm" className="mt-2 w-full" onClick={() => editImageRef.current?.click()}>
+                                            <Upload className="mr-2 h-3 w-3" />Change Image
+                                        </Button>
+                                    )}
                                 </div>
                             </div>
                             <div className="mt-6 flex justify-end gap-2">

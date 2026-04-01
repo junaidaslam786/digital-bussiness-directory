@@ -4,14 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Skeleton } from "@/components/ui/Skeleton";
-import { MapPin, Plus, Trash2, Phone, AlertCircle, CheckCircle2, X as XIcon } from "lucide-react";
+import { MapPin, Plus, Trash2, Phone, AlertCircle, CheckCircle2, X as XIcon, Edit, Save } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useBusinessesStore } from "@/store/businesses.api";
 import { useLocationsStore } from "@/store/locations.api";
 import type { BusinessBranch } from "@/types/enterprise";
 
 export default function BranchesPage() {
-    const { myBusinesses, myLoading, fetchMyBusinesses, fetchBranches, createBranch, deleteBranch } = useBusinessesStore();
+    const { myBusinesses, myLoading, fetchMyBusinesses, fetchBranches, createBranch, updateBranch, deleteBranch } = useBusinessesStore();
     const { cities, fetchCities } = useLocationsStore();
     const [branches, setBranches] = useState<BusinessBranch[]>([]);
     const [loading, setLoading] = useState(true);
@@ -19,6 +19,8 @@ export default function BranchesPage() {
     const [saving, setSaving] = useState(false);
     const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
     const [form, setForm] = useState({ address: "", cityId: "", phone: "", operatingHours: "" });
+    const [editId, setEditId] = useState<string | null>(null);
+    const [editForm, setEditForm] = useState({ address: "", cityId: "", phone: "", operatingHours: "" });
 
     const business = myBusinesses[0];
 
@@ -54,6 +56,37 @@ export default function BranchesPage() {
             setMessage({ type: "success", text: "Branch added successfully!" });
         } catch (err) {
             setMessage({ type: "error", text: (err as Error).message || "Failed to add branch" });
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    const startEdit = (branch: BusinessBranch) => {
+        setEditId(branch.id);
+        setEditForm({
+            address: branch.address,
+            cityId: branch.cityId || "",
+            phone: branch.phone || "",
+            operatingHours: branch.operatingHours || "",
+        });
+    };
+
+    const handleEdit = async () => {
+        if (!business || !editId || !editForm.address.trim()) return;
+        setSaving(true);
+        setMessage(null);
+        try {
+            const updated = await updateBranch(business.id, editId, {
+                address: editForm.address,
+                cityId: editForm.cityId || undefined,
+                phone: editForm.phone || undefined,
+                operatingHours: editForm.operatingHours || undefined,
+            });
+            setBranches((prev) => prev.map((b) => (b.id === editId ? updated : b)));
+            setEditId(null);
+            setMessage({ type: "success", text: "Branch updated successfully!" });
+        } catch (err) {
+            setMessage({ type: "error", text: (err as Error).message || "Failed to update branch" });
         } finally {
             setSaving(false);
         }
@@ -188,37 +221,74 @@ export default function BranchesPage() {
                     {branches.map((branch) => (
                         <Card key={branch.id}>
                             <CardContent className="p-6">
-                                <div className="flex items-start justify-between">
-                                    <div className="flex items-start space-x-4">
-                                        <div className="rounded-lg bg-emerald-100 p-2 dark:bg-emerald-900/30">
-                                            <MapPin className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                                {editId === branch.id ? (
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Address *</label>
+                                            <Input type="text" value={editForm.address} onChange={(e) => setEditForm({ ...editForm, address: e.target.value })} />
                                         </div>
                                         <div>
-                                            <h3 className="font-semibold text-gray-900 dark:text-white">
-                                                {branch.address}
-                                            </h3>
-                                            {branch.city && (
-                                                <p className="text-sm text-gray-500 dark:text-gray-400">
-                                                    {branch.city.name}
-                                                </p>
-                                            )}
-                                            {branch.phone && (
-                                                <p className="mt-1 flex items-center text-sm text-gray-600 dark:text-gray-400">
-                                                    <Phone className="mr-1 h-3 w-3" />
-                                                    {branch.phone}
-                                                </p>
-                                            )}
-                                            {branch.operatingHours && (
-                                                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                                                    {branch.operatingHours}
-                                                </p>
-                                            )}
+                                            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">City</label>
+                                            <select className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-emerald-600 focus:outline-none dark:border-gray-700 dark:bg-gray-950 dark:text-white" value={editForm.cityId} onChange={(e) => setEditForm({ ...editForm, cityId: e.target.value })}>
+                                                <option value="">Select city</option>
+                                                {cities.map((c) => (<option key={c.id} value={c.id}>{c.name}</option>))}
+                                            </select>
+                                        </div>
+                                        <div className="grid gap-4 md:grid-cols-2">
+                                            <div>
+                                                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Phone</label>
+                                                <Input type="tel" value={editForm.phone} onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })} />
+                                            </div>
+                                            <div>
+                                                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Operating Hours</label>
+                                                <Input type="text" value={editForm.operatingHours} onChange={(e) => setEditForm({ ...editForm, operatingHours: e.target.value })} />
+                                            </div>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <Button size="sm" onClick={handleEdit} disabled={saving} className="bg-emerald-600 hover:bg-emerald-700">
+                                                <Save className="mr-1 h-3 w-3" />{saving ? "Saving..." : "Save"}
+                                            </Button>
+                                            <Button size="sm" variant="outline" onClick={() => setEditId(null)}>Cancel</Button>
                                         </div>
                                     </div>
-                                    <Button variant="outline" size="sm" onClick={() => handleDelete(branch.id)}>
-                                        <Trash2 className="h-4 w-4 text-red-600 dark:text-red-400" />
-                                    </Button>
-                                </div>
+                                ) : (
+                                    <div className="flex items-start justify-between">
+                                        <div className="flex items-start space-x-4">
+                                            <div className="rounded-lg bg-emerald-100 p-2 dark:bg-emerald-900/30">
+                                                <MapPin className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                                            </div>
+                                            <div>
+                                                <h3 className="font-semibold text-gray-900 dark:text-white">
+                                                    {branch.address}
+                                                </h3>
+                                                {branch.city && (
+                                                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                                                        {branch.city.name}
+                                                    </p>
+                                                )}
+                                                {branch.phone && (
+                                                    <p className="mt-1 flex items-center text-sm text-gray-600 dark:text-gray-400">
+                                                        <Phone className="mr-1 h-3 w-3" />
+                                                        {branch.phone}
+                                                    </p>
+                                                )}
+                                                {branch.operatingHours && (
+                                                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                                        {branch.operatingHours}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div className="flex gap-1">
+                                            <Button variant="outline" size="sm" onClick={() => startEdit(branch)}>
+                                                <Edit className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                                            </Button>
+                                            <Button variant="outline" size="sm" onClick={() => handleDelete(branch.id)}>
+                                                <Trash2 className="h-4 w-4 text-red-600 dark:text-red-400" />
+                                            </Button>
+                                        </div>
+                                    </div>
+                                )}
                             </CardContent>
                         </Card>
                     ))}

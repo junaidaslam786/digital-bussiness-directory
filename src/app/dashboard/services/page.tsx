@@ -12,20 +12,24 @@ import {
     Briefcase,
     Save,
     X,
+    Upload,
 } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useBusinessesStore } from "@/store/businesses.api";
 import type { BusinessService } from "@/types/enterprise";
 import { formatCurrency } from "@/lib/format";
 
 export default function ServicesPage() {
     const [searchQuery, setSearchQuery] = useState("");
-    const { myBusinesses, myLoading, fetchMyBusinesses, fetchServices, deleteService, updateService } = useBusinessesStore();
+    const { myBusinesses, myLoading, fetchMyBusinesses, fetchServices, deleteService, updateService, uploadMedia } = useBusinessesStore();
     const [services, setServices] = useState<BusinessService[]>([]);
     const [loading, setLoading] = useState(true);
     const [editingService, setEditingService] = useState<BusinessService | null>(null);
     const [editForm, setEditForm] = useState({ title: "", description: "", price: "" });
+    const [editImageFile, setEditImageFile] = useState<File | null>(null);
+    const [editImagePreview, setEditImagePreview] = useState<string | null>(null);
+    const editImageRef = useRef<HTMLInputElement>(null);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -62,6 +66,8 @@ export default function ServicesPage() {
             description: service.description ?? "",
             price: service.price != null ? String(service.price) : "",
         });
+        setEditImageFile(null);
+        setEditImagePreview(service.imageUrl || null);
     };
 
     const handleSaveEdit = async () => {
@@ -69,10 +75,16 @@ export default function ServicesPage() {
         setSaving(true);
         setError(null);
         try {
+            let imageUrl = editingService.imageUrl;
+            if (editImageFile) {
+                const media = await uploadMedia(business.id, editImageFile, "image");
+                imageUrl = media.mediaUrl;
+            }
             const updated = await updateService(business.id, editingService.id, {
                 title: editForm.title,
                 description: editForm.description || undefined,
                 price: editForm.price ? Number(editForm.price) : undefined,
+                imageUrl: imageUrl || undefined,
             });
             setServices((prev) => prev.map((s) => (s.id === editingService.id ? updated : s)));
             setEditingService(null);
@@ -151,15 +163,17 @@ export default function ServicesPage() {
             ) : (
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {filteredServices.map((service) => (
-                        <Card key={service.id} className="hover:shadow-lg transition-shadow">
+                        <Card key={service.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                            {service.imageUrl ? (
+                                <img src={service.imageUrl} alt={service.title} className="aspect-video w-full object-cover" />
+                            ) : (
+                                <div className="aspect-video bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
+                                    <Briefcase className="h-10 w-10 text-gray-400" />
+                                </div>
+                            )}
                             <CardHeader>
                                 <div className="flex items-start justify-between">
-                                    <div className="flex items-center space-x-3">
-                                        <div className="rounded-lg bg-emerald-100 p-2 dark:bg-emerald-900/30">
-                                            <Briefcase className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
-                                        </div>
-                                        <CardTitle className="text-lg">{service.title}</CardTitle>
-                                    </div>
+                                    <CardTitle className="text-lg">{service.title}</CardTitle>
                                 </div>
                             </CardHeader>
                             <CardContent>
@@ -194,7 +208,7 @@ export default function ServicesPage() {
             {/* Edit Service Modal */}
             {editingService && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                    <Card className="w-full max-w-lg">
+                    <Card className="w-full max-w-lg max-h-[90vh] overflow-y-auto">
                         <CardContent className="p-6">
                             <h2 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">Edit Service</h2>
                             <div className="space-y-4">
@@ -209,6 +223,49 @@ export default function ServicesPage() {
                                 <div>
                                     <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Price</label>
                                     <Input type="number" value={editForm.price} onChange={(e) => setEditForm({ ...editForm, price: e.target.value })} />
+                                </div>
+                                {/* Image Upload */}
+                                <div>
+                                    <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Service Image</label>
+                                    <input
+                                        ref={editImageRef}
+                                        type="file"
+                                        accept="image/jpeg,image/png,image/webp"
+                                        className="hidden"
+                                        onChange={(e) => {
+                                            const file = e.target.files?.[0];
+                                            if (file) {
+                                                setEditImageFile(file);
+                                                setEditImagePreview(URL.createObjectURL(file));
+                                            }
+                                        }}
+                                    />
+                                    {editImagePreview ? (
+                                        <div className="relative">
+                                            <img src={editImagePreview} alt="Service" className="aspect-video w-full rounded-lg object-cover" />
+                                            <button
+                                                onClick={() => { setEditImageFile(null); setEditImagePreview(null); if (editImageRef.current) editImageRef.current.value = ""; }}
+                                                className="absolute right-2 top-2 rounded-full bg-red-600 p-1 text-white hover:bg-red-700"
+                                            >
+                                                <X className="h-3 w-3" />
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div
+                                            className="flex h-32 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 transition-colors hover:border-emerald-400 dark:border-gray-700"
+                                            onClick={() => editImageRef.current?.click()}
+                                        >
+                                            <div className="text-center">
+                                                <Upload className="mx-auto h-8 w-8 text-gray-400" />
+                                                <p className="mt-1 text-xs text-gray-500">Click to upload</p>
+                                            </div>
+                                        </div>
+                                    )}
+                                    {editImagePreview && (
+                                        <Button variant="outline" size="sm" className="mt-2 w-full" onClick={() => editImageRef.current?.click()}>
+                                            <Upload className="mr-2 h-3 w-3" />Change Image
+                                        </Button>
+                                    )}
                                 </div>
                             </div>
                             <div className="mt-6 flex justify-end gap-2">

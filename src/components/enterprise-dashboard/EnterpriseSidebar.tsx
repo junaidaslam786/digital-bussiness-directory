@@ -10,6 +10,7 @@ import {
     Briefcase,
     Images,
     MapPin,
+    Clock,
     MessageSquare,
     BarChart3,
     Settings,
@@ -57,6 +58,11 @@ const navItems: NavItem[] = [
         title: "Branches",
         href: "/dashboard/branches",
         icon: MapPin,
+    },
+    {
+        title: "Business Hours",
+        href: "/dashboard/hours",
+        icon: Clock,
     },
     {
         title: "Reviews",

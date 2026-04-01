@@ -17,24 +17,34 @@ import { ReviewsSection } from "@/components/enterprise/ReviewsSection";
 import { RelatedBusinesses } from "@/components/enterprise/RelatedBusinesses";
 import { OwnerInfo } from "@/components/enterprise/OwnerInfo";
 import { BusinessCard } from "@/components/enterprise/BusinessCard";
-import { Heart, GitCompare, Share2, MapPin } from "lucide-react";
+import { Heart, GitCompare, Share2, MapPin, Phone, Briefcase, Package } from "lucide-react";
 import { useFavoritesStore } from "@/store/favorites.store";
 import { useCompareStore } from "@/store/compare.store";
 import { formatCurrency } from "@/lib/format";
+import type { BusinessMedia, BusinessCard as BusinessCardType } from "@/types/enterprise";
 
 export default function EnterprisePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
-  const { currentBusiness: enterprise, detailLoading, detailError, fetchBusinessById, clearCurrentBusiness } = useBusinessesStore();
+  const { currentBusiness: enterprise, detailLoading, detailError, fetchBusinessById, clearCurrentBusiness, fetchMedia, fetchCard } = useBusinessesStore();
   const { reviews, loading: reviewsLoading, fetchBusinessReviews } = useReviewsStore();
   const [activeTab, setActiveTab] = useState<"overview" | "services" | "reviews">("overview");
   const { addFavorite, removeFavorite, isFavorite } = useFavoritesStore();
   const { addToCompare, removeFromCompare, isInCompare, canAddMore } = useCompareStore();
+  const [media, setMedia] = useState<BusinessMedia[]>([]);
+  const [card, setCard] = useState<BusinessCardType | null>(null);
 
   useEffect(() => {
     fetchBusinessById(slug);
     fetchBusinessReviews(slug);
     return () => { clearCurrentBusiness(); };
   }, [slug, fetchBusinessById, fetchBusinessReviews, clearCurrentBusiness]);
+
+  useEffect(() => {
+    if (enterprise?.id) {
+      fetchMedia(enterprise.id).then(setMedia).catch(() => {});
+      fetchCard(enterprise.id).then((c) => setCard(c)).catch(() => {});
+    }
+  }, [enterprise?.id, fetchMedia, fetchCard]);
 
   if (detailLoading || !enterprise) {
     if (detailError) {
@@ -157,8 +167,8 @@ export default function EnterprisePage({ params }: { params: Promise<{ slug: str
         {/* Main Content */}
         <div className="space-y-8 lg:col-span-2">
           {/* Gallery */}
-          {enterprise.media && enterprise.media.length > 0 && (
-            <GalleryCarousel images={enterprise.media} />
+          {media.length > 0 && (
+            <GalleryCarousel images={media} />
           )}
 
           {/* Tabs */}
@@ -220,6 +230,45 @@ export default function EnterprisePage({ params }: { params: Promise<{ slug: str
                   </CardContent>
                 </Card>
               )}
+
+              {/* Branches */}
+              {enterprise.branches && enterprise.branches.length > 0 && (
+                <div>
+                  <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+                    Branches ({enterprise.branches.length})
+                  </h2>
+                  <div className="space-y-3">
+                    {enterprise.branches.map((branch) => (
+                      <Card key={branch.id}>
+                        <CardContent className="flex items-start space-x-3 p-4">
+                          <MapPin className="mt-0.5 h-5 w-5 text-emerald-500" />
+                          <div>
+                            <p className="font-semibold text-gray-900 dark:text-white">
+                              {branch.address}
+                            </p>
+                            {branch.city && (
+                              <p className="text-sm text-gray-500 dark:text-gray-400">
+                                {branch.city.name}
+                              </p>
+                            )}
+                            {branch.phone && (
+                              <p className="mt-1 flex items-center text-sm text-gray-600 dark:text-gray-400">
+                                <Phone className="mr-1 h-3 w-3" />
+                                {branch.phone}
+                              </p>
+                            )}
+                            {branch.operatingHours && (
+                              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                {branch.operatingHours}
+                              </p>
+                            )}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
@@ -228,9 +277,20 @@ export default function EnterprisePage({ params }: { params: Promise<{ slug: str
               {enterprise.services && enterprise.services.length > 0 && (
                 <div>
                   <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">Services</h2>
-                  <div className="space-y-3">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     {enterprise.services.map((service) => (
-                      <Card key={service.id}>
+                      <Card key={service.id} className="overflow-hidden">
+                        {service.imageUrl ? (
+                          <img
+                            src={service.imageUrl}
+                            alt={service.title}
+                            className="aspect-video w-full object-cover"
+                          />
+                        ) : (
+                          <div className="flex aspect-video items-center justify-center bg-gray-100 dark:bg-gray-800">
+                            <Briefcase className="h-10 w-10 text-gray-300 dark:text-gray-600" />
+                          </div>
+                        )}
                         <CardContent className="p-4">
                           <div className="flex items-start justify-between">
                             <div>
@@ -261,7 +321,18 @@ export default function EnterprisePage({ params }: { params: Promise<{ slug: str
                   <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">Products</h2>
                   <div className="grid gap-4 sm:grid-cols-2">
                     {enterprise.products.map((product) => (
-                      <Card key={product.id}>
+                      <Card key={product.id} className="overflow-hidden">
+                        {product.imageUrl ? (
+                          <img
+                            src={product.imageUrl}
+                            alt={product.name}
+                            className="aspect-video w-full object-cover"
+                          />
+                        ) : (
+                          <div className="flex aspect-video items-center justify-center bg-gray-100 dark:bg-gray-800">
+                            <Package className="h-10 w-10 text-gray-300 dark:text-gray-600" />
+                          </div>
+                        )}
                         <CardContent className="p-4">
                           <h3 className="font-semibold text-gray-900 dark:text-white">
                             {product.name}
@@ -271,9 +342,16 @@ export default function EnterprisePage({ params }: { params: Promise<{ slug: str
                               {product.description}
                             </p>
                           )}
-                          {product.sku && (
-                            <p className="mt-2 text-xs text-gray-500">SKU: {product.sku}</p>
-                          )}
+                          <div className="mt-2 flex items-center justify-between">
+                            {product.sku && (
+                              <p className="text-xs text-gray-500">SKU: {product.sku}</p>
+                            )}
+                            {product.price != null && (
+                              <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                                {formatCurrency(product.price)}
+                              </span>
+                            )}
+                          </div>
                         </CardContent>
                       </Card>
                     ))}
@@ -295,7 +373,7 @@ export default function EnterprisePage({ params }: { params: Promise<{ slug: str
 
         {/* Sidebar */}
         <div className="space-y-6">
-          <BusinessCard enterprise={enterprise} />
+          {card && <BusinessCard enterprise={{ ...enterprise, card }} />}
           {enterprise.user && <OwnerInfo owner={enterprise.user} />}
           <ContactPanel enterprise={enterprise} />
           {enterprise.businessHours && enterprise.businessHours.length > 0 && (

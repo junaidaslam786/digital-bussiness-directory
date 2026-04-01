@@ -47,6 +47,8 @@ export default function ProfilePage() {
     const [showSocialForm, setShowSocialForm] = useState(false);
     const [socialForm, setSocialForm] = useState({ type: "facebook", url: "" });
     const [socialSaving, setSocialSaving] = useState(false);
+    const [editingSocialId, setEditingSocialId] = useState<string | null>(null);
+    const [editSocialForm, setEditSocialForm] = useState({ type: "", url: "" });
 
     const business = myBusinesses[0];
 
@@ -164,6 +166,27 @@ export default function ProfilePage() {
             setSocials((prev) => prev.filter((s) => s.id !== socialId));
         } catch (err) {
             setMessage({ type: "error", text: (err as Error).message || "Failed to delete social link" });
+        }
+    };
+
+    const startEditSocial = (social: BusinessSocial) => {
+        setEditingSocialId(social.id);
+        setEditSocialForm({ type: social.type, url: social.url });
+    };
+
+    const handleEditSocial = async () => {
+        if (!business || !editingSocialId || !editSocialForm.url.trim()) return;
+        setSocialSaving(true);
+        setMessage(null);
+        try {
+            const updated = await updateSocial(business.id, editingSocialId, { type: editSocialForm.type, url: editSocialForm.url });
+            setSocials((prev) => prev.map((s) => (s.id === editingSocialId ? updated : s)));
+            setEditingSocialId(null);
+            setMessage({ type: "success", text: "Social link updated!" });
+        } catch (err) {
+            setMessage({ type: "error", text: (err as Error).message || "Failed to update social link" });
+        } finally {
+            setSocialSaving(false);
         }
     };
 
@@ -530,17 +553,54 @@ export default function ProfilePage() {
                                 <div className="space-y-2">
                                     {socials.map((social) => (
                                         <div key={social.id} className="flex items-center justify-between rounded-lg border border-gray-200 p-3 dark:border-gray-700">
-                                            <div className="flex items-center gap-3">
-                                                <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 capitalize">
-                                                    {social.type}
-                                                </Badge>
-                                                <a href={social.url} target="_blank" rel="noopener noreferrer" className="text-sm text-emerald-600 hover:underline dark:text-emerald-400 truncate max-w-[200px]">
-                                                    {social.url}
-                                                </a>
-                                            </div>
-                                            <Button size="sm" variant="ghost" onClick={() => handleDeleteSocial(social.id)}>
-                                                <Trash2 className="h-4 w-4 text-red-500" />
-                                            </Button>
+                                            {editingSocialId === social.id ? (
+                                                <div className="flex w-full items-center gap-2">
+                                                    <select
+                                                        className="rounded-lg border border-gray-300 px-2 py-1.5 text-sm dark:border-gray-700 dark:bg-gray-950 dark:text-white"
+                                                        value={editSocialForm.type}
+                                                        onChange={(e) => setEditSocialForm({ ...editSocialForm, type: e.target.value })}
+                                                    >
+                                                        <option value="facebook">Facebook</option>
+                                                        <option value="instagram">Instagram</option>
+                                                        <option value="linkedin">LinkedIn</option>
+                                                        <option value="youtube">YouTube</option>
+                                                        <option value="x">X (Twitter)</option>
+                                                        <option value="kakao">KakaoTalk</option>
+                                                        <option value="tiktok">TikTok</option>
+                                                        <option value="whatsapp">WhatsApp</option>
+                                                    </select>
+                                                    <Input
+                                                        className="flex-1 text-sm"
+                                                        value={editSocialForm.url}
+                                                        onChange={(e) => setEditSocialForm({ ...editSocialForm, url: e.target.value })}
+                                                    />
+                                                    <Button size="sm" onClick={handleEditSocial} disabled={socialSaving} className="bg-emerald-600 hover:bg-emerald-700">
+                                                        <Save className="h-3 w-3" />
+                                                    </Button>
+                                                    <Button size="sm" variant="ghost" onClick={() => setEditingSocialId(null)}>
+                                                        <X className="h-3 w-3" />
+                                                    </Button>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <div className="flex items-center gap-3">
+                                                        <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 capitalize">
+                                                            {social.type}
+                                                        </Badge>
+                                                        <a href={social.url} target="_blank" rel="noopener noreferrer" className="text-sm text-emerald-600 hover:underline dark:text-emerald-400 truncate max-w-[200px]">
+                                                            {social.url}
+                                                        </a>
+                                                    </div>
+                                                    <div className="flex gap-1">
+                                                        <Button size="sm" variant="ghost" onClick={() => startEditSocial(social)}>
+                                                            <Edit className="h-4 w-4 text-gray-500" />
+                                                        </Button>
+                                                        <Button size="sm" variant="ghost" onClick={() => handleDeleteSocial(social.id)}>
+                                                            <Trash2 className="h-4 w-4 text-red-500" />
+                                                        </Button>
+                                                    </div>
+                                                </>
+                                            )}
                                         </div>
                                     ))}
                                 </div>
